@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
+}
+
+.app {
+  text-align: center;
+}
+
+.header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 10px 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  width: max-content;
+}
+
+.dropdown-text {
+  display: flex;
+  max-width: 60px;
+  margin-right: 5px;
+}
+
+.dropdown-arrow {
+  font-size: 28px;
+}
+
+.main-content {
+  margin-top: 9rem;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.input-box {
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 35%;
+}
+
+.submit-button {
+  margin-left: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #555;
+}
+
+.Templates3 {
+  margin-top: 20px;
+}
+.temp {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 1rem;
+}
+
+.template-icon {
+  min-height: 60px;
+}
+
+.template-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.template-card {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 8px;
+  text-transform: capitalize;
+  border: 1px solid #444;
+  text-align: center;
+  cursor: pointer;
+  width: 8rem;
+  height: 5rem;
+}
+
+.template-card:hover {
+  border-color: #24bae3;
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .template-card {
+    width: 100%;
+    max-width: 200px;
+  }
+}
