@@ -4,7 +4,7 @@ import StylePropertyField from "./StylePropertyField.tsx";
 
 function BasicStyleManager({ sectors }) {
   const basicSectors = [
-    { name: "Dimensions & Layout", attributes: [] },
+    { name: "Dimensions & Layout", attributes: [] }, 
     { name: "Text Editor", attributes: [] },
     { name: "Appearance", attributes: [] },
     { name: "Border", attributes: [] },

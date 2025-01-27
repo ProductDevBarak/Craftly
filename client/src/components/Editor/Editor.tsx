@@ -13,7 +13,7 @@ import RightSidebar from "./components/RightSidebar.tsx";
 import "./style.css";
 import { getCode } from "../../utils/code";
 import { useParams } from "react-router-dom";
-
+import GradientBars from "./components/Themes.jsx";
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -91,7 +91,7 @@ export default function App() {
           <Topbar className="h-[40px] bg-neutral-800" />
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
-            <RightSidebar />
+            <GradientBars/>
           </div>
         </div>
         <ModalProvider>

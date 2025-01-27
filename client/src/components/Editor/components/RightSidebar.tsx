@@ -9,6 +9,7 @@ import CustomBlockManager from "./CustomBlockManager.tsx";
 import { cx } from "./common.ts";
 import CustomLayerManager from "./CustomLayerManager.tsx";
 import CustomStyleManager from "./CustomStyleManager.tsx";
+import GradientBars from "./Themes.jsx";
 
 const TABS = [
   {
