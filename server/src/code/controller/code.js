@@ -41,10 +41,11 @@ export const createChat = async (req, res) => {
       });
     }
     const code = await Code.create({
-      title: req.body.propmt,
+      title: req.body.prompt,
       HTML: html,
       CSS: css,
     });
+    // console.log(code);
     const user = await User.findById(req.body.userid);
     user.prompts.push(code._id);
     await user.save();
@@ -73,7 +74,6 @@ export const updateChat = async (req, res) => {
       ],
     });
     const responseContent = completion.choices[0].message.content;
-    console.log(responseContent);
     const htmlMatch = responseContent.match(/"HTML":\s*"((?:[^"\\]|\\.)*)"/);
     const cssMatch = responseContent.match(/"CSS":\s*"((?:[^"\\]|\\.)*)"/);
 
