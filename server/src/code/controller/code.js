@@ -22,7 +22,7 @@ export const createChat = async (req, res) => {
         {
           role: "system",
           content:
-            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is responsive",
+            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is 1)Responsive and good, 2) has good UI, 3) has good color combinations, gradients and shadows, 4) add quotes and sentences related to the website, 5) make the website attractive, 6) add animations and transitions, 7) use good fonts and icons related to the website, 8) incorporate microinteractions related to the website, and use these three colors only 1)#6C757D 2)#2A9D8F 3)#F8EDEB and also HTML code should be more than 300 lines and css should be atleast 400 lines .Be as creative as possible while following all the 8 instructions given.",
         },
         {
           role: "user",

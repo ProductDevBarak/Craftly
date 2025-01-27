@@ -1,4 +1,3 @@
-import { set } from "date-fns";
 import React, { useState, useEffect, useRef } from "react";
 
 const Slider = ({ value, onChange2, min = 0, max = 100, step = 1 }) => {
