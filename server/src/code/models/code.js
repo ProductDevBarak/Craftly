@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const codeSchema = new mongoose.Schema({
+  title: {
+    type: String,
+  },
   HTML: {
     type: String,
   },
   CSS: {
     type: String,
   },
-  // JS: {
-  //   type: String,
-  // },
   createdAt: {
     type: Date,
     default: Date.now,

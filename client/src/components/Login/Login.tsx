@@ -2,7 +2,6 @@ import React from "react";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../../config/Firebase_Config";
-import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Login = () => {
       };
 
       // Backend API Call
-      const response = await fetch("http://localhost:8000/auth/login", {
+      const response = await fetch("http://localhost:8000/user/login", {
         method: "POST",
         credentials: "include",
         headers: { "Content-type": "application/json" },
@@ -46,9 +45,16 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Microsoft Login Integration</h1>
-      <button onClick={handleLogin}>Login With Microsoft</button>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="p-8 bg-gray-800 rounded-lg shadow-lg text-center">
+        <h1 className="text-2xl font-bold mb-6">Microsoft Login Integration</h1>
+        <button
+          onClick={handleLogin}
+          className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-lg transition"
+        >
+          Login With Microsoft
+        </button>
+      </div>
     </div>
   );
 };

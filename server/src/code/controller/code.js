@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import Code from "../models/code.js";
+import User from "../../users/models/users.js";
 dotenv.config();
 
 const openai = new OpenAI({
@@ -39,7 +40,15 @@ export const createChat = async (req, res) => {
         error: "Failed to extract HTML or CSS from the response.",
       });
     }
-    const code = await Code.create({ HTML: html, CSS: css });
+    const code = await Code.create({
+      title: req.body.propmt,
+      HTML: html,
+      CSS: css,
+    });
+    const user = await User.findById(req.body.userid);
+    user.prompts.push(code._id);
+    await user.save();
+    // console.log(code);
     res.json(code);
   } catch (error) {
     console.error(error);
@@ -88,6 +97,9 @@ export const updateChat = async (req, res) => {
 export const getCode = async (req, res) => {
   try {
     const code = await Code.findById(req.params.id);
+    if (!code) {
+      return res.status(404).json({ error: "Code not found" });
+    }
     res.json(code);
   } catch (error) {
     console.error(error);

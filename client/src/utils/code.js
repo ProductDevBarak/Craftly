@@ -1,9 +1,12 @@
 import axios from "axios";
-import { backendURL } from "./server";
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
-export const createChat = async (prompt, navigate) => {
+export const createChat = async (prompt, userid, navigate) => {
   try {
-    const response = await axios.post(`${backendURL}/code/create`, { prompt });
+    const response = await axios.post(`${backendURL}/code/create`, {
+      prompt,
+      userid,
+    });
     return response.data;
   } catch (error) {
     console.log(error);
