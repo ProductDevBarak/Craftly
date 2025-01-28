@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 
 const Radio = ({ label, value, checked, onChange }) => {
   const handleChange = () => {
@@ -14,14 +14,15 @@ const Radio = ({ label, value, checked, onChange }) => {
       style={{
         flex: 1,
         textAlign: 'center',
-        padding: '5px 5px 5px 5px ',
+        padding: '3px 3px 3px 3px ',
         cursor: 'pointer',
         backgroundColor: checked ? '#65E06B' : '#1E1E1E',
         color: checked ? '#FFFFFF' : '#white',
         borderRight: '2px solid #646464',
         transition: 'all 0.3s',
-        fontFamily: 'DM Sans',
-        fontSize: '17px'
+        fontFamily: 'Inter',
+        fontSize: '15px',
+        fontWeight: '300',
       }}
     >
       {label}
@@ -51,7 +52,7 @@ const RadioGroup = ({ options, defaultValue, onChange }) => {
         borderRadius: '10px',
         overflow: 'hidden',
         border: '2px solid #646464',
-        width: '100%',
+        width: '90%',
       }}
     >
       {options.map((option) => (

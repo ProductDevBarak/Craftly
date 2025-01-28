@@ -56,9 +56,13 @@ function BasicStyleManager({ sectors }) {
             key={sector.name}
             title={sector.name}
             className=""
-            size="md"
+            size="sm"
+            colour= "gray-300"
+            svg="Gray"
+            font="inter"
+            border="no"
           >
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap p-4">
               {sector.attributes.map((prop) => (
                 <StylePropertyField key={prop.id} prop={prop.prop} />
               ))}

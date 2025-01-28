@@ -1,27 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CustomInputValueWithImages = () => {
+const Counter = ({defValue, val, onChange}) => {
   const [value, setValue] = useState(0);
+  const [internalValue, setInternalValue] = useState(val || 0);
+
+  useEffect(() => {
+    setInternalValue(val);
+  }, [val]);
 
   const handleIncrement = () => {
-    setValue((prevValue) => Math.min(prevValue + 1, 100)); 
+    const newValue = Math.min(internalValue + 1, 100);
+    setInternalValue(newValue);
+    onChange(newValue);
   };
 
   const handleDecrement = () => {
-    setValue((prevValue) => Math.max(prevValue - 1, 0)); 
+    const newValue = Math.max(internalValue - 1, 0);
+    setInternalValue(newValue);
+    onChange(newValue); 
   };
 
   const handleInputChange = (e) => {
-    const newValue = parseFloat(e.target.value);
-    if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
-      setValue(newValue);
+    const newValue = e.target.value;
+    if(newValue === '' || Number(newValue)>=0 && Number(newValue)<=100){
+      setInternalValue(newValue);
+      if(newValue !== ''){
+        onChange(newValue);
+      }
     }
-  };
+  }
 
   return (
     <div
       style={{
-        width: '50%',
+        width: '40%',
+        font:"DM Sans",
       }}
     >
       <div
@@ -34,17 +47,18 @@ const CustomInputValueWithImages = () => {
       >
         <input
           type="number"
-          value={value}
+          value={internalValue}
           onChange={handleInputChange}
           style={{
-            width: '100%',
+            width: '80%',
             padding: '5px',
-            backgroundColor: 'black',
+            backgroundColor: "#1E1E1E",
             color: 'white',
-            border: '1px solid white',
-            borderRadius: '4px',
+            border: '1.75px solid #646464',
+            borderRadius: '10px',
             textAlign: 'center',
             fontSize: '16px',
+            fontFamily: 'Inter',
           }}
         />
         
@@ -52,12 +66,12 @@ const CustomInputValueWithImages = () => {
           onClick={handleDecrement}
           style={{
             position: 'absolute',
-            right: '5px',
-            top: '15px',
+            right: '28px',
+            top: '17px',
             cursor: 'pointer',
           }}
-          width="16"
-          height="16"
+          width="13"
+          height="13"
           viewBox="0 0 18 19"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -77,13 +91,13 @@ const CustomInputValueWithImages = () => {
           onClick={handleIncrement}
           style={{
             position: 'absolute',
-            right: '5px',
+            right: '28px',
             top: '4px',
             cursor: 'pointer',
           }}
           transform='rotate(180)'
-          width="16"
-          height="16"
+          width="13"
+          height="13"
           viewBox="0 0 18 19"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +113,7 @@ const CustomInputValueWithImages = () => {
             />
           </g>
         </svg>
+        
       </div>
       <style>
         {`
@@ -106,11 +121,18 @@ const CustomInputValueWithImages = () => {
                 input::-webkit-inner-spin-button {
                 -webkit-appearance: none;
                 margin: 0;
-        }
+            }
+            input {
+              border-color: #646464 !important;
+            }
+            input:focus {
+              outline: none;
+              border-color: #646464 !important;
+          }
         `}
       </style>
     </div>
   );
 };
 
-export default CustomInputValueWithImages;
+export default Counter;

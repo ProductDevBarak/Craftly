@@ -12,15 +12,15 @@ export default function CustomStyleManager({ sectors }) {
         <h1 className="mx-2 text-lg opacity-50 text-center">
           Please Select an element from the canvas.
         </h1>
-  </div>
+      </div> 
     );
   }
   return (
     <div className="gjs-custom-style-manager text-left">
-      <CustomAccordion title="Basic" className="basic" size="lg">
+      <CustomAccordion title="Basic" className="basic" size="lg" colour="white" font="sans" svg="White" border="yes">
         <BasicStyleManager sectors={sectors} />
       </CustomAccordion>
-      <CustomAccordion title="Advanced" className="advance" size="lg">
+      <CustomAccordion title="Advanced" className="advance" size="lg" colour="white" font="sans" svg="White" border="yes">
         <AdvanceStyleManager sectors={sectors} />
       </CustomAccordion>
       {/* {sectors.map((sector) => (

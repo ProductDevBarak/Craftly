@@ -96,7 +96,7 @@ export default function RightSidebar() {
       </div>
 
       <div
-        className="overflow-y-scroll flex-grow border border-gray-500 border-t-transparent rounded-b-lg h-0"
+        className="overflow-y-scroll flex-grow border border-gray-500 border-t-transparent rounded-b-lg h-0 custom-scrollbar"
         style={{ minHeight: 0 }}
       >
         {selectedTab === 0 && (

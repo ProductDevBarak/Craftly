@@ -1,4 +1,3 @@
-import { set } from "date-fns";
 import React, { useState, useEffect, useRef } from "react";
 
 const Slider = ({ value, onChange2, min = 0, max = 100, step = 1 }) => {
@@ -95,7 +94,7 @@ const Slider = ({ value, onChange2, min = 0, max = 100, step = 1 }) => {
           style={{
             position: "absolute",
             top: "-5px",
-            left: `${((localValue - min) / (max - min)) * 100}%`,
+            left: `${localValue}%`,
             transform: "translateX(-50%)",
             width: "20px",
             height: "20px",

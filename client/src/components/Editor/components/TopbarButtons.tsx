@@ -65,6 +65,7 @@ export default function TopbarButtons({
   const cmdButtonsRight = [
     {
       id: "core:preview",
+      id: "core:fullscreen",
       iconPath: (
         <svg
           width="28"
@@ -82,7 +83,6 @@ export default function TopbarButtons({
         </svg>
       ),
       disabled: () => false,
-      options: {},
     },
     {
       id: "core:component-outline",
@@ -155,7 +155,7 @@ export default function TopbarButtons({
       } else {
         Commands.run(id, options);
       }
-      setUpdateCounter((value) => value + 1); // This will trigger a re-render
+      setUpdateCounter((value) => value + 1);
     },
     [Commands]
   );

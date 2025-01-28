@@ -9,7 +9,6 @@ interface CustomDropdownProps {
   options: Option[];
   defaultValue?: string;
   onChange: (value: string) => void;
-  size?: 'small' | 'medium' | 'large';
   width?: number;
   backgroundColor?: string;
   dropdownBackgroundColor?: string;
@@ -21,8 +20,7 @@ const Select: React.FC<CustomDropdownProps> = ({
   options,
   defaultValue = '',
   onChange,
-  size = 'medium',
-  width = 200,
+  width = 100,
   backgroundColor = '#1E1E1E',
   dropdownBackgroundColor = 'black',
   dropdownHoverColor = '#65E06F',
@@ -32,7 +30,6 @@ const Select: React.FC<CustomDropdownProps> = ({
   const [selectedValue, setSelectedValue] = useState(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -55,12 +52,6 @@ const Select: React.FC<CustomDropdownProps> = ({
     onChange(value);
   };
 
-  const sizeStyles = {
-    small: { fontSize: '12px', padding: '8px' },
-    medium: { fontSize: '14px', padding: '10px' },
-    large: { fontSize: '16px', padding: '12px' },
-  };
-
   return (
     <div
       ref={dropdownRef}
@@ -74,15 +65,46 @@ const Select: React.FC<CustomDropdownProps> = ({
       <div
         onClick={toggleDropdown}
         style={{
-          ...sizeStyles[size],
-          backgroundColor,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '34px', 
+          backgroundColor: '1E1E1E',
           color: 'white',
-          border: '1px solid gray',
-          borderRadius: '4px',
+          border: '1.75px solid #646464',
+          borderRadius: '10px',
+          padding: '0 8px',
           cursor: 'pointer',
+          fontFamily: 'inter',
         }}
       >
-        {selectedValue || 'Select an option'}
+        <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+          {selectedValue || 'Select an option'}
+        </div>
+        <div
+          style={{
+            borderLeft: '2px solid #646464',
+            height: '100%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            paddingLeft: '7px', 
+          }}
+        >
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.5 1.34375L5 5.65625L0.5 1.34375"
+              stroke="white"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
 
       {/* Dropdown Options */}
@@ -94,11 +116,10 @@ const Select: React.FC<CustomDropdownProps> = ({
             left: 0,
             width: '100%',
             backgroundColor: dropdownBackgroundColor,
-            border: '1px solid gray',
-            borderRadius: '4px',
+            border: '1px solid #646464',
+            borderRadius: '10px',
             marginTop: '4px',
             zIndex: 1000,
-            overflow: 'hidden',
           }}
         >
           {options.map((option) => (

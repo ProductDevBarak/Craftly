@@ -13,6 +13,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Home />} />
           <Route path="/editor/:id" element={<Editor />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>

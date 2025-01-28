@@ -145,7 +145,7 @@ export default function LayerItem({
               'truncate flex-grow font-sans text-sm',
               !components.length && 'pointer-events-none ml-[-10]'
             )}
-            onClick={toggleOpen} style={{...itemStyle,}}>
+            onClick={toggleOpen} style={{...itemStyle, fontFamily: 'inter'}}>
             {name}
           </div>
           <div className='hover:cursor-pointer'>

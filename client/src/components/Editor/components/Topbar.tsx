@@ -2,17 +2,36 @@ import * as React from "react";
 import { DevicesProvider, WithEditor } from "@grapesjs/react";
 import { cx } from "./common.ts";
 import TopbarButtons from "./TopbarButtons.tsx";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 export default function Topbar({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
+  // const handleClick = () => {
+  //   const editor = (window as any).editor;
+  //   if (editor) {
+  //     editor.runCommand("core:open-code");
+  //   }
+  // };
   const handleClick = () => {
     const editor = (window as any).editor;
     if (editor) {
-      editor.runCommand("core:open-code");
+      const html = editor.getHtml();
+      const css = editor. getCss();
+      const zip = new JSZip();
+      zip.file(
+        "index.html",
+        `<!DOCTYPE html>\n<html>\n<head>\n<link rel="stylesheet" href="./styles.css">\n</head>\n${html}\n</html>`
+      );
+      if (css.trim()) {
+        zip.file("styles.css", css);
+      }
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        saveAs(content, "project.zip");
+      });
     }
   };
-
   return (
     <div
       className={cx(

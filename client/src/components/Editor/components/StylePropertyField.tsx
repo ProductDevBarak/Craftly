@@ -18,6 +18,7 @@ import CustomRadioGroup from "./Radio.jsx";
 // import Select from "@mui/material/Select";
 import Slider from "./Slider.jsx";
 import TextField from "@mui/material/TextField";
+import Counter from "./Counter.jsx";
 import type {
   Property,
   PropertyComposite,
@@ -27,7 +28,6 @@ import type {
   PropertyStack,
 } from "grapesjs";
 import { BTN_CLS, ROUND_BORDER_COLOR, cx } from "./common.ts";
-import { parse } from "path";
 
 interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
   prop: Property;
@@ -70,12 +70,17 @@ export default function StylePropertyField({
   const valueWithDef = hasValue ? value : defValue;
 
   let inputToRender = (
-    <TextField
-      placeholder={defValue}
-      value={valueString}
-      onChange={onChange}
-      size="small"
-      fullWidth
+    // <TextField
+    //   placeholder={defValue}
+    //   value={valueString}
+    //   onChange={onChange}
+    //   size="small"
+    //   fullWidth
+    // />
+    <Counter 
+        defValue={defValue}
+        val={valueString}
+        onChange={handleChange}
     />
   );
 
@@ -118,7 +123,6 @@ export default function StylePropertyField({
           <CustomSelect
             options={options}
             defaultValue={value}
-            size="medium"
             onChange={(selectedValue) => {
               onChange2(selectedValue);
             }}
@@ -218,13 +222,17 @@ export default function StylePropertyField({
         inputToRender = (
           <div
             className={cx(
-              "flex flex-col p-2 gap-2 bg-black/20 min-h-[54px]",
+              "flex flex-col p-2 gap-2 bg-black/20",
               ROUND_BORDER_COLOR
             )}
+            style={{
+              minHeight: "40px", 
+              borderRadius: "12px", 
+            }}
           >
             {layers.map((layer) => (
-              <div key={layer.getId()} className={ROUND_BORDER_COLOR}>
-                <div className="flex gap-1 bg-slate-800 px-2 py-1 items-center">
+              <div key={layer.getId()} className="">
+                <div className="flex gap-1 px-2 py-1 items-center">
                   <IconButton
                     size="small"
                     onClick={() => layer.move(layer.getIndex() - 1)}

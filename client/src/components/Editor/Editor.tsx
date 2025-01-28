@@ -84,6 +84,42 @@ export default function App() {
             id: "gjs-blocks-basic",
             src: "https://unpkg.com/grapesjs-blocks-basic",
           },
+          {
+            id: "grapesjs-plugin-forms",
+            src: "https://unpkg.com/grapesjs-plugin-forms"
+          },
+          {
+            id: "grapesjs-navbar",
+            src: "https://unpkg.com/grapesjs-navbar"
+          },
+          {
+            id:"grapesjs-component-countdown",
+            src:"https://unpkg.com/grapesjs-component-countdown"
+          },
+          {
+            id:"grapesjs-style-gradient",
+            src:"https://unpkg.com/grapesjs-style-gradient"
+          },
+          {
+            id: "grapesjs-style-filter",
+            src: "https://unpkg.com/grapesjs-style-filter"
+          },
+          {
+            id: "grapesjs-tooltip",
+            src: "https://unpkg.com/grapesjs-tooltip"
+          },
+          {
+            id: "grapesjs-custom-code",
+            src: "https://unpkg.com/grapesjs-custom-code"
+          },
+          {
+            id: "grapesjs-user-blocks",
+            src: "https://unpkg.com/grapesjs-user-blocks"
+          },
+          {
+            id: "grapesjs-calendar-component",
+            src: "https://unpkg.com/grapesjs-calendar-component"
+          },
         ]}
         onEditor={onEditor}
       >
