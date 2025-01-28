@@ -24,9 +24,8 @@ export default function App() {
   const { id } = useParams();
   const [defaultHTML, setDefaultHTML] = React.useState<string>("");
   const [defaultCSS, setDefaultCSS] = React.useState<string>("");
-  const [editorInstance, setEditorInstance] = React.useState<Editor | null>(
-    null
-  );
+  const [editorInstance, setEditorInstance] = React.useState<Editor | null>(null);
+  const [loading, setLoading] = React.useState(true); // Added loading state
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +40,11 @@ export default function App() {
         }
       } catch (error) {
         console.error("Error fetching code:", error);
+      } finally {
+        setLoading(false); // Stop loading after fetching data
       }
     };
+
     fetchData();
   }, [id, editorInstance]);
 
@@ -73,6 +75,15 @@ export default function App() {
     });
   };
 
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-black text-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <p className="mt-4 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <GjsEditor
@@ -82,7 +93,7 @@ export default function App() {
         plugins={[
           {
             id: "gjs-blocks-basic",
-            src: "https://unpkg.com/grapesjs-blocks-basic",
+            src: "https://unpkg.com/grapesjs-blocks-basic"
           },
           {
             id: "grapesjs-plugin-forms",
@@ -93,12 +104,12 @@ export default function App() {
             src: "https://unpkg.com/grapesjs-navbar"
           },
           {
-            id:"grapesjs-component-countdown",
-            src:"https://unpkg.com/grapesjs-component-countdown"
+            id: "grapesjs-component-countdown",
+            src: "https://unpkg.com/grapesjs-component-countdown"
           },
           {
-            id:"grapesjs-style-gradient",
-            src:"https://unpkg.com/grapesjs-style-gradient"
+            id: "grapesjs-style-gradient",
+            src: "https://unpkg.com/grapesjs-style-gradient"
           },
           {
             id: "grapesjs-style-filter",
@@ -109,8 +120,8 @@ export default function App() {
             src: "https://unpkg.com/grapesjs-tooltip"
           },
           {
-            id: "grapesjs-custom-code",
-            src: "https://unpkg.com/grapesjs-custom-code"
+            id: "grapesjs-custom-code"
+            , src: "https://unpkg.com/grapesjs-custom-code"
           },
           {
             id: "grapesjs-user-blocks",
