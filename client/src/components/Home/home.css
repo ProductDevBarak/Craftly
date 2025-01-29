@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+*{
+  /* color: #FFF; */
+  font-family: "DM Sans", serif;
+font-style: normal;
+line-height: normal;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
+  /* overflow-y: hidden; */
+  background-image: url(./Layers2.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.app {
+  text-align: center;
+}
+
+.header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+.left-icon {
+  display: flex;
+  z-index: 10;
+}
+.toggle-button-opened {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+  filter: invert(100%);
+}
+.toggle-button-closed {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+  filter: invert(90%);
+}
+.toggle-button:hover {
+  background-color: #b1b1b1;
+}
+.user-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #6466f4;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.body {
+  display: flex;
+  position: relative;
+  left: 10%;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 10px 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  width: max-content;
+}
+
+.dropdown-text {
+  display: flex;
+  max-width: 60px;
+  margin-right: 5px;
+}
+
+.dropdown-arrow {
+  font-size: 28px;
+}
+
+.main-content {
+  margin-top: 9rem;
+  /* border: 2px solid red; */
+  width: 100%;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.input-box {
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  width: 50%;
+  height: 5vh;
+}
+
+.submit-button {
+  /* margin-left: 10px; */
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  right: 5%;
+}
+
+.submit-button:hover {
+  background-color: #333;
+}
+
+.Templates3 {
+  margin-top: 20px;
+}
+.temp {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 3rem;
+}
+
+.template-icon {
+  min-height: 60px;
+}
+
+.template-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.template-card {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 8px;
+  text-transform: capitalize;
+  border: 1px solid #444;
+  text-align: center;
+  cursor: pointer;
+  width: 8rem;
+  height: 5rem;
+  transition:
+    transform 0.2s ease-out,
+    width 0.2s,
+    height 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.template-card:hover {
+  border-color: #24bae3;
+  border-radius: 8px;
+  transform: scale(1.1);
+}
+
+@media (max-width: 1070px) {
+  .dropdown-text {
+    display: none;
+  }
+  .submit-button {
+    right: 7%;
+  }
+  .submit-button:hover {
+    background-color: #333;
+  }
+  .template-card:hover {
+    border-color: #24bae3;
+    border-radius: 8px;
+    transform: scale(1.1);
+  }
+}
+@media (max-width: 700px) {
+  .submit-button {
+    right: 9%;
+  }
+  .input-box {
+    width: 70%;
+  }
+  .template-card {
+    transform: scale(0.7);
+  }
+  .temp {
+    gap: 0.5rem;
+  }
+  .submit-button:hover {
+    background-color: #333;
+  }
+  .template-card:hover {
+    border-color: #24bae3;
+    border-radius: 8px;
+    transform: scale(1.1);
+  }
+}
+@media (max-width: 500px) {
+  .submit-button {
+    right: 12%;
+  }
+  .input-box {
+    width: 90%;
+  }
+  .main-content {
+    position: relative;
+    right: 5%;
+    bottom: 0;
+  }
+  .temp {
+    gap: 0rem;
+  }
+  .submit-button:hover {
+    background-color: #333;
+  }
+  .template-card:hover {
+    border-color: #24bae3;
+    border-radius: 8px;
+    transform: scale(1.1);
+  }
+}

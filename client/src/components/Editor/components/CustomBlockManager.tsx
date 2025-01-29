@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { BlocksResultProps } from "@grapesjs/react";
 import MoreBlockManager from "./MoreBlockManager.tsx";
-import ThemesBlockManager from "./ThemesBlockManager.jsx";
+import ThemesBlockManager from "./ThemesBlockManager.tsx";
 
 export type CustomBlockManagerProps = Pick<
   BlocksResultProps,

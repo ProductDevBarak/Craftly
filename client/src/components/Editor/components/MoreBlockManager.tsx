@@ -58,7 +58,8 @@ const segregateBlocks = (mapCategoryBlocks: any): CategorizedBlock[] => {
         p.attributes.label === "Tooltip" ||
         p.attributes.label === "Custom Code" ||
         p.attributes.label === "Calendar" ||
-        p.attributes.label === "Map"
+        p.attributes.label === "Map" ||
+        p.attributes.label === "Link"
       ) {
         moreblocks[4].attributes.push({ label: p.attributes.label, prop: p });
       }

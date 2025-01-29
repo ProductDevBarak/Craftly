@@ -4,17 +4,14 @@ import { cx } from "./common.ts";
 import TopbarButtons from "./TopbarButtons.tsx";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
+import { useState } from "react";
 
 export default function Topbar({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  // const handleClick = () => {
-  //   const editor = (window as any).editor;
-  //   if (editor) {
-  //     editor.runCommand("core:open-code");
-  //   }
-  // };
-  const handleClick = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const editor = (window as any).editor;
+  const exportToZip = () => {
     const editor = (window as any).editor;
     if (editor) {
       const html = editor.getHtml();
@@ -32,6 +29,19 @@ export default function Topbar({
       });
     }
   };
+
+  const handleClick = () => {
+    const editor = (window as any).editor;
+    if (editor) {
+      //editor.runCommand("core:open-code");
+      setShowPopup(true);
+    }
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div
       className={cx(
@@ -136,13 +146,69 @@ export default function Topbar({
           <path
             d="M7.90644 7.68397L5.26013 10.2794C4.72579 10.8035 4.72579 11.6532 5.26013 12.1772L7.90644 14.7726M14.3169 7.76857L16.877 10.2794C17.4113 10.8034 17.4113 11.6531 16.877 12.1772L14.3169 14.688M12.703 5.46875L9.54088 16.9878"
             stroke="black"
-            stroke-width="1.35519"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.35519"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         Get Code
       </button>
+      {showPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[#0B0B0B] rounded-lg shadow-lg p-6 w-[90%] max-w-3xl max-h-[80vh] overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4 text-center font-sans text-white">
+              Code
+            </h2>
+            <div className="flex flex-col md:flex-row gap-5">
+              <div
+                className="bg-[#1E1E1E] p-4 rounded-lg border border-[#646464] text-white flex-1 overflow-y-auto custom-scrollbar"
+                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+              >
+                <h3 className="text-lg font-semibold mb-2">HTML</h3>
+                {editor &&
+                  editor
+                  .getHtml()
+                  .split(">")
+                  .map((line, index) => (
+                    <div key={index}>
+                      {line.trim()}
+                      {index < editor.getHtml().split(">").length - 1 && ">"}
+                    </div>
+                  ))}
+              </div>
+              <div
+                className="bg-[#1E1E1E] p-4 rounded-lg border border-[#646464] text-white flex-1 overflow-y-auto"
+                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+              >
+                <h3 className="text-lg font-semibold mb-2">CSS</h3>
+                {editor &&
+                  editor
+                  .getCss()
+                  .split(";")
+                  .map((line, index) => (
+                    <div key={index}>
+                      {line.trim()}
+                      {index < editor.getCss().split(";").length - 1 && ";"}
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                className="bg-[#FFFFFF] text-[#000000] text-400 px-4 py-2 rounded"
+                onClick={exportToZip}
+              >
+                <div className="flex justify-center gap-2 align-center">
+                <svg width="25" height="25" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.5 22.5769C23.5 24.1913 22.1569 25.5 20.5 25.5H11.5C9.84314 25.5 8.5 24.1913 8.5 22.5769L8.50002 12.3462M14.5 6.5H13.75L8.50002 11.6154L8.50002 12.3462M14.5 6.5H20.5C22.1569 6.5 23.5 7.80871 23.5 9.42308L23.5 12.3462M14.5 6.5V12.3462H8.50002M14.5 17.4615H22.75M22.75 17.4615L19.75 14.5385M22.75 17.4615L19.75 20.3846" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                  Zip
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

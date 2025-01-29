@@ -24,8 +24,8 @@ export const createChat = async (req, res) => {
       4) Add quotes and sentences related to the website,
       5) Make the website attractive,
       6) Add animations and transitions,
-      7) Use good fonts and icons related to the website,
-      Also, ensure the HTML code is more than 400 lines, and the CSS should be at least 500 lines. Be as creative as possible while following all the above instructions.
+      7) Use good fonts and icons related to the website, 
+      Also, ensure the HTML code is more than 100 lines, and the CSS should be at least 200 lines. Be as creative as possible while following all the above instructions.
     `;
     const finalPrompt = `${req.body.prompt} \n ${basePrompt}`;
     const completion = await openai.chat.completions.create({
@@ -34,7 +34,7 @@ export const createChat = async (req, res) => {
         {
           role: "system",
           content:
-            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is 1)Responsive and good, 2) has good UI, 3) has good color combinations, gradients and shadows, 4) add quotes and sentences related to the website, 5) make the website attractive, 6) add animations and transitions, 7) use good fonts and icons related to the website, 8) incorporate microinteractions related to the website, and use these three colors only 1)#6C757D 2)#2A9D8F 3)#F8EDEB and also HTML code should be more than 300 lines and css should be atleast 400 lines .Be as creative as possible while following all the 8 instructions given.",
+            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is 1)Responsive and good, 2) has good UI, 3) has good color combinations, gradients and shadows, 4) add quotes and sentences related to the website, 5) make the website attractive, 6) add animations and transitions, 7) use good fonts and icons related to the website, 8) incorporate microinteractions related to the website, and use :root{--color-a: #E6EFE9; --color-b: #C5F4E0; --color-c: #C2EABA; --color-d: #A7C4A0; --color-e: #8F8389; and also HTML code should be more than 100 lines and css should be atleast 200 lines .Be as creative as possible while following all the 8 instructions given.",
         },
         {
           role: "user",

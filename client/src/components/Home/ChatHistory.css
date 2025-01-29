@@ -1,0 +1,96 @@
+/* ChatHistory.css */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+*{
+  /* color: #FFF; */
+  font-family: "DM Sans", serif;
+font-style: normal;
+line-height: normal;
+}
+.ChatHistory {
+  width: 20%;
+  height: 100vh; /* Full height to stretch from top to bottom */
+  background-color: #121212;
+  padding: 20px;
+  color: white;
+  border-right: 2px solid rgb(99, 96, 96);
+  overflow-y: auto;
+  position: fixed; /* Sidebar remains fixed */
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.ChatHistory.hidden {
+  transform: translateX(-100%); /* Hides the sidebar */
+}
+
+.history-heading {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: white;
+  position: sticky; 
+  top: -5%;
+  z-index: 1;
+  background-color: #121212; 
+  padding: 15px 0;
+  height: 10vh;
+  /* border-bottom: 1px solid rgb(99, 96, 96);  */
+}
+
+.ChatHistory ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  padding: 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: left;
+}
+
+.history-item:hover {
+  background-color: #383838;
+}
+
+.toggle-button {
+  /* position: fixed;
+  top: 10px;
+  left: 220px;  */
+  background-color: #121212; 
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 3;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #333232;
+}
+
+/* @media (max-width: 768px) {
+  .ChatHistory {
+    width: 30;
+  }
+
+  .toggle-button {
+    left: 65%; 
+  }
+} */
+
+@media (max-width: 500px)
+{
+  .ChatHistory {
+    width: 50%;
+  }
+  .toggle-button {
+    left: 65%; /* Adjust toggle button position for smaller screens */
+  }
+}
