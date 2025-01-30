@@ -1,0 +1,102 @@
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+
+    padding: 10px;
+    border-radius: 999px;
+
+    background-color: gray;
+    color: white;
+    text-decoration-color: black;
+    border: none;
+    cursor: pointer;
+    width: 600px;
+
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 999px;
+
+    background-color: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+
+.search-button.hovered {
+    width: 192px;
+    line-height: 10px;
+    transition: 0.3s ease-in-out;
+    position: absolute;
+}
+
+
+.search-text {
+    color: black;
+}
+
+.search-button.clicked {
+ 
+    gap: 0px;
+    width: 100%;
+    max-width: 600px;
+    padding: 3px;
+    height: auto;
+    border-radius: 857px;
+    background-color: gray;
+    border: 2px solid transparent;
+    text-decoration-color: black;
+    transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.back-btn {
+    color: transparent;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: gray;
+    border: none;
+    place-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+.mic {
+    color: transparent;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color:pink;
+    border: none;
+    place-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+.send {
+    color: transparent;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: rgb(193, 2, 2);
+    border: none;
+    place-items: center;
+    padding: 10px;
+    cursor: pointer;
+}

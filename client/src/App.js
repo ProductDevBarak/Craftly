@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Home from "./components/Home/Home2.jsx";
+import Home from "./components/Home/Home.jsx";
 import Login from "./components/Login/Login.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Editor from "./components/Editor/Editor.tsx";
