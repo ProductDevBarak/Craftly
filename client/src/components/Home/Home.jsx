@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logout from "../Login/LogOut.tsx";
 import { createChat, getCode, deleteCode } from "../../utils/code.js";
+import { useUser } from "../../context/UserContext";
+import { message } from "antd";
 
-export default function Home() {
+const Home = () => {
   const navigate = useNavigate();
   const [prompt, setPrompt] = useState("");
-  const [prompts, setPrompts] = useState([]);
   const [codes, setCodes] = useState([]);
-  const [id, setId] = useState("");
+  const { id, userName, prompts } = useUser();
   const [open, setOpen] = useState(true);
   const [lopen, setLopen] = useState(false);
   const dropdownRef = useRef(null);
-  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -23,24 +23,6 @@ export default function Home() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const getuser = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/user/get-user", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setPrompts(data.user.prompts);
-      setId(data.user._id);
-      setUserName(data.user.name);
-    } catch (error) {
-      console.error("Error in getuser:", error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,11 +39,11 @@ export default function Home() {
     try {
       const response = await deleteCode({ id: e.target.id, userid: id });
       if (response.status === 200) {
-        alert("Code Deleted Successfully");
+        message.success("Code deleted successfully");
         pageRefresh();
       }
     } catch (error) {
-      alert("Failed to delete code");
+      message.error("Error deleting code");
       console.error("Error in handleDelete:", error);
     }
   };
@@ -84,11 +66,6 @@ export default function Home() {
 
     if (prompts.length > 0) fetchTitles();
   }, [prompts]);
-
-  useEffect(() => {
-    getuser();
-  }, []);
-  
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
@@ -298,4 +275,6 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export default Home;
