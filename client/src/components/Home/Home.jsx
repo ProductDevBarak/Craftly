@@ -72,10 +72,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getuser();
-  }, []);
-
-  useEffect(() => {
     const fetchTitles = async () => {
       try {
         const codeArray = await Promise.all(

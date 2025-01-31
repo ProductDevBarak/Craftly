@@ -8,7 +8,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      // Firebase Authentication
       const loginResponse = await signInWithPopup(auth, provider);
       const user = loginResponse.user;
 
@@ -18,8 +17,6 @@ const Login = () => {
         phoneNumber: user.phoneNumber,
         avatar: user.photoURL,
       };
-
-      // Backend API Call
       const response = await fetch("http://localhost:8000/user/login", {
         method: "POST",
         credentials: "include",
@@ -32,12 +29,8 @@ const Login = () => {
         alert(data.message);
         return;
       }
-
-      // Optionally, set the token as a cookie (for client-side use, if not using HttpOnly)
       document.cookie = `token=${data.token}; path=/; SameSite=Strict; Secure`;
-
-      // Navigate to the protected route
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Login failed", error);
       alert("Login failed. Please try again.");
