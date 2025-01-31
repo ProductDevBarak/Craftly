@@ -1,5 +1,6 @@
 import User from "../models/users.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const Login = async (req, res) => {
   try {
@@ -59,6 +60,36 @@ export const getUser = async (req, res) => {
       user,
     });
   } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteCode = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { userid } = req.params;
+    const user = await User.findById(userid);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    const objectIdToDelete = new mongoose.Types.ObjectId(id);
+    user.prompts = user.prompts.filter(
+      (prompt) => !prompt._id.equals(objectIdToDelete)
+    );
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Code deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting code:", error);
     res.status(500).json({
       success: false,
       message: "Server error.",
