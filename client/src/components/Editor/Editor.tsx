@@ -10,6 +10,7 @@ import CustomModal from "./components/CustomModal.tsx";
 import CustomAssetManager from "./components/CustomAssetManager.tsx";
 import Topbar from "./components/Topbar.tsx";
 import RightSidebar from "./components/RightSidebar.tsx";
+import RepromptButton from "./components/RepromptButton.jsx";
 import "./style.css";
 import { getCode } from "../../utils/code";
 import { useParams } from "react-router-dom";
@@ -128,6 +129,7 @@ export default function App() {
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />
+            <RepromptButton />
           </div>
         </div>
         <ModalProvider>

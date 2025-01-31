@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../../config/Firebase_Config";
 import screenImage from "../Login/screen.png";
 import logo from "../Login/logo.png";
+import micro from "../Login/microsoft.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,29 +41,40 @@ const Login = () => {
   };
 
   return (
-    // <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-    //   <div className="p-8 bg-gray-800 rounded-lg shadow-lg text-center">
-    //     <h1 className="text-2xl font-bold mb-6">Microsoft Login Integration</h1>
-    //     <button
-    //       onClick={handleLogin}
-    //       className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-lg transition"
-    //     >
-    //       Login With Microsoft
-    //     </button>
-    //   </div>
-    // </div>
-  <div className="bg-[#000000] flex">
-    <div className="pl-[70px] py-[100px] size-[50%]">
-      <img src={screenImage} className="pr-[20%] pl-[70px] border-r border-[#646464]" />
+    <div className="bg-gradient-to-br from-neutral-800 to-neutral-950 flex h-screen text-white">
+      <div className="w-1/2 flex justify-center items-center">
+        <img src={screenImage} className="max-w-[700px] border-r border-[#646464] pr-[100px] pl-[130px]" />
+      </div>
+      <div className="w-1/2 flex flex-col justify-center pr-10">
+        <div className="flex items-center mb-5">
+          <img src={logo} className="h-9 mr-2 ml-52" />
+          <h1 className="text-4xl font-krona">Craftly</h1>
+        </div>
+        <h2 className="text-3xl font-bold mb-6 font-dmSans ml-32">One Step to Your Creation</h2>
+        <div className="bg-white text-black py-8 px-5 rounded-lg shadow-lg w-full max-w-[290px] ml-[10.6rem]">
+          <h3 className="text-lg font-sans text-center mb-4 text-[#000000]">Create your Account</h3>
+          <button
+            onClick={handleLogin}
+            className="w-full bg-[#353535] text-white flex items-center justify-center py-2 rounded-xl mb-3"
+          >
+            <span className="mr-2"><img src={micro} className="h-5" /></span> 
+            <h1 className="font-sans pr-2 font-light">Sign in with Microsoft</h1>
+          </button>
+          
+          <p className="text-center text-sm text-black font-sans font-extralight">Or</p>
+          <input
+            type="text"
+            placeholder="Email Address or Mobile number"
+            className=" border-b-[1px] py-1 border-[#000000] mt-3 font-dmSans font-normal text-center w-full text-[0.75rem]"
+          />
+          <button
+            className="w-full bg-black text-white py-2 rounded-lg mt-3 font-dmSans text-sm font-light"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
     </div>
-    <div className="py-[100px] pl-[20px] flex text-center">
-      <img src={logo} className="max-h-[20px]" />
-      <h1 className="text-[#FFFFFF]">Craftly</h1>
-    </div>
-    <div>
-      
-    </div>
-  </div>
   );
 };
 

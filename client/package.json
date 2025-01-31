@@ -12,9 +12,8 @@
     "@types/backbone": "^1.4.15",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
-    "antd": "^5.23.2",
     "axios": "^1.7.9",
-    "css-loader": "^7.1.2",
+    "css": "^3.0.0",
     "file-saver": "^2.0.5",
     "firebase": "^11.2.0",
     "grapesjs": "^0.21.13",
@@ -24,18 +23,15 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^7.1.3",
+    "react-scripts": "^5.0.1",
     "style-loader": "^4.0.0",
-    "tailwindcss": "^4.0.0"
+    "tailwind": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "@svgr/webpack": "^8.1.0",
-    "react-scripts": "latest"
   },
   "browserslist": {
     "production": [
@@ -48,5 +44,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.1"
   }
 }

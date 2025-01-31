@@ -16,21 +16,24 @@ export default function CustomBlockManager({
 }: CustomBlockManagerProps) {
   const [isMoreVisible, setIsMoreVisible] = useState(false);
   const [isThemesVisible, setIsThemesVisible] = useState(false);
+  const [isMadeVisible, setIsMadeVisible] = useState(false);
 
   const toggleMore = () => {
     setIsMoreVisible((prev) => !prev);
-    if (isThemesVisible) setIsThemesVisible(false);
   };
 
   const toggleThemes = () => {
     setIsThemesVisible((prev) => !prev);
-    if (isMoreVisible) setIsMoreVisible(false);
   };
+
+  const toogleMade = () => {
+    setIsMadeVisible((prev) => !prev);
+  }
 
   return (
     <div className="custom-block-manager">
       <div
-        className="themes-header flex items-center justify-between pt-3 px-4 cursor-pointer"
+        className="flex items-center justify-between pt-3 px-4 cursor-pointer"
         onClick={toggleThemes}
       >
         <h1 className="text-lg font-sans text-[300]">Themes</h1>
@@ -57,7 +60,7 @@ export default function CustomBlockManager({
       </div>
       {isThemesVisible && <ThemesBlockManager />}
       <div
-        className="more-header flex items-center justify-between pt-3 px-4 cursor-pointer"
+        className="flex items-center justify-between pt-3 px-4 cursor-pointer"
         onClick={toggleMore}
       >
         <h1 className="text-lg font-sans text-[300]">More</h1>
