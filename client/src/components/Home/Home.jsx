@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logout from "../Login/LogOut.tsx";
 import { createChat, getCode, deleteCode } from "../../utils/code.js";
-import { set } from "date-fns";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -72,10 +71,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getuser();
-  }, []);
-
-  useEffect(() => {
     const fetchTitles = async () => {
       try {
         const codeArray = await Promise.all(
@@ -89,6 +84,11 @@ export default function Home() {
 
     if (prompts.length > 0) fetchTitles();
   }, [prompts]);
+
+  useEffect(() => {
+    getuser();
+  }, []);
+  
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">

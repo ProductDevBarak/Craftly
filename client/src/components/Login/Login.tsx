@@ -33,7 +33,7 @@ const Login = () => {
         return;
       }
       document.cookie = `token=${data.token}; path=/; SameSite=Strict; Secure`;
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Login failed", error);
       alert("Login failed. Please try again.");

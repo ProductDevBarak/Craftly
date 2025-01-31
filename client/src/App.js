@@ -10,9 +10,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
           <Route path="/editor/:id" element={<Editor />} />
         </Route>
