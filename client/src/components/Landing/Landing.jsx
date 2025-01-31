@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Logout from "../Login/LogOut.tsx";
+import { useUser } from "../../context/UserContext";
 
 const getDistributedPosition = (index, total, width, height) => ({
   x: (width / total) * index + width / (2 * total),
@@ -12,15 +13,15 @@ const getRandomDuration = () => Math.random() * 6 + 14;
 const getRandomSize = () => `${Math.random() * 10 + 20}rem`;
 const colors = ["#11CC72", "#A0CC11"];
 
-const MovingCircles = () => {
+const Landing = () => {
   const containerRef = useRef(null);
   const numCircles = 6;
   const [positions, setPositions] = useState([]);
   const navigate = useNavigate();
-  const [id, setId] = useState(null);
   const [lopen, setLopen] = useState(false);
   const dropdownRef = useRef(null);
   const hasInitialized = useRef(false);
+  const { id } = useUser();
 
   useEffect(() => {
     if (!hasInitialized.current) {
@@ -52,26 +53,6 @@ const MovingCircles = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const getuser = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/user/get-user", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setId(data.user._id);
-    } catch (error) {
-      console.error("Error in getuser:", error);
-    }
-  };
-
-  useEffect(() => {
-    getuser();
   }, []);
 
   return (
@@ -159,7 +140,7 @@ const MovingCircles = () => {
                 className="absolute right-0 mt-4 bg-[#1E1E1E] border border-gray-700 px-4 py-2 shadow-lg rounded-lg z-50"
               >
                 {id ? (
-                  <Logout setId={setId} />
+                  <Logout />
                 ) : (
                   <button className="" onClick={() => navigate("/login")}>
                     Login
@@ -198,4 +179,4 @@ const MovingCircles = () => {
   );
 };
 
-export default MovingCircles;
+export default Landing;

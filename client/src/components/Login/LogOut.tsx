@@ -1,19 +1,17 @@
-import { set } from "date-fns";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/UserContext.js";
+import { message } from "antd";
 
-const Logout = ({ setId }) => {
+const Logout = () => {
   const navigate = useNavigate();
+  const { setId } = useUser();
 
   const handleLogout = () => {
-    setTimeout(() => {
-      document.cookie =
-        "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      if (setId) {
-        setId(null);
-      }
-      navigate("/");
-    }, 5000);
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    setId(null);
+    navigate("/");
+    message.success("Logged out successfully");
   };
 
   return <button onClick={handleLogout}>Logout</button>;

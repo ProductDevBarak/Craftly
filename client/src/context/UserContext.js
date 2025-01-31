@@ -1,0 +1,41 @@
+import { createContext, useContext, useState, useEffect } from "react";
+
+const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+  const [id, setId] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [prompts, setPrompts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:8000/user/get-user", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!response.ok) throw new Error("Failed to fetch user data");
+
+        const data = await response.json();
+        setId(data.user._id);
+        setPrompts(data.user.prompts);
+        setUserName(data.user.name);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error in getUser:", error);
+      }
+    };
+    getUser();
+  }, []);
+
+  return (
+    <UserContext.Provider
+      value={{ id, setId, userName, prompts, loading, setLoading }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useUser = () => useContext(UserContext);
