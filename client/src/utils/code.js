@@ -36,3 +36,15 @@ export const getCode = async (id) => {
     return error?.response?.data || error;
   }
 };
+
+export const deleteCode = async ({ id, userid }) => {
+  try {
+    const response = await axios.post(`${backendURL}/user/delete/${userid}`, {
+      id,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error?.response?.data || error;
+  }
+};
