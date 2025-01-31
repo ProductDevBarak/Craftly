@@ -86,7 +86,7 @@ export const updateChat = async (req, res) => {
       ],
     });
     const responseContent = completion.choices[0].message.content;
-    const htmlMatch = responseContent.match(/"HTML":\s*"((?:[^"\\]|\\.)*)"/);
+    const htmlMatch = responseContent.match(/<body>([\s\S]*?)<\/body>/i);
     const cssMatch = responseContent.match(/"CSS":\s*"((?:[^"\\]|\\.)*)"/);
 
     const html = htmlMatch

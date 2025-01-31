@@ -1,14 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import { useParams } from "react-router-dom";
+import {updateChat, getCode} from "../../../utils/code"
+import { Editor, EditorConfig } from "grapesjs";
 
-export default function RepromptButton() {
+export default function RepromptButton({ editor }) {
+  const { id } = useParams();
   const [state, setState] = useState("normal");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sendCode, setSendCode] = useState("");
+   
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const code = await getCode(id);
+          const result = code.HTML + "\ n" + code.CSS;
+          setSendCode(result);
+        } catch (error) {
+          console.error("Error fetching code:", error);
+        }
+      };
+      fetchData();
+    }, [id]);
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const responseChat = await updateChat(sendCode, searchTerm, id);
+        console.log("patience");
+        if(editor){
+          editor.setStyle(responseChat.CSS);
+          editor.setComponents(responseChat.HTML);
+          console.log(responseChat.CSS);
+          console.log(responseChat.HTML);
+        }else{
+           console.error("fuck it");
+        }
+        setSearchTerm("");
+      } catch (error) {
+        console.error("Error in handleSubmit:", error);
+      }
+    };
   
   return (
     <div className="block">
       {state === "clicked" ? (
         <div
-          className="flex items-center gap-2 w-full max-w-[600px] p-1 h-auto rounded-full bg-white border-2 border-transparent transition-all duration-300 font-dmSans"
+          className="flex items-center gap-2  min-w-[calc(100vw-410px)] p-1 h-auto rounded-full bg-white border-2 border-transparent transition-all duration-300 font-dmSans"
           onMouseLeave={() => setState("normal")}
         >
           <button
@@ -16,7 +53,7 @@ export default function RepromptButton() {
             onClick={() => setState("normal")}
           >
             <svg
-              width="1"
+              width="15"
               height="15"
               viewBox="0 0 12 20"
               fill="none"
@@ -39,18 +76,12 @@ export default function RepromptButton() {
             autoFocus
             placeholder="Fine-tune your prompt here"
           />
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 46 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
           >
-            <path
-              d="M16.6476 17.0072C16.6476 13.2235 19.4593 10.1562 22.9277 10.1562C26.3961 10.1562 29.2077 13.2235 29.2077 17.0072V23.8582C29.2077 27.6418 26.3961 30.7091 22.9277 30.7091C19.4593 30.7091 16.6476 27.6419 16.6476 23.8582V17.0072Z"
-              fill="#525252"
-            />
-          </svg>
+            Submit
+          </button>
         </div>
       ) : (
         <div className="border-animation">
@@ -104,7 +135,7 @@ export default function RepromptButton() {
             border: none;
             cursor: pointer;
             position: relative;
-            z-index: 1; /* Ensures the button is above the animated border */
+            z-index: 1; 
             }
 
             @keyframes rotate {
