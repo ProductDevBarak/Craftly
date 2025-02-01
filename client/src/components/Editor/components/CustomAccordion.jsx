@@ -30,9 +30,9 @@ const accordionIconGray = (
       d="M7 20.5L16 11.5L25 20.5" 
       stroke="white" 
       stroke-opacity="0.56" 
-      stroke-width="2" 
-      stroke-linecap="round" 
-      stroke-linejoin="round"
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
     />
   </svg>
 );

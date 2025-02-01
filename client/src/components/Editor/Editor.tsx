@@ -129,7 +129,9 @@ export default function App() {
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />
-            <RepromptButton />
+            <div className="fixed bottom-4 left-4 z-10">
+              {editorInstance && <RepromptButton editor={editorInstance} />}
+            </div>
           </div>
         </div>
         <ModalProvider>
