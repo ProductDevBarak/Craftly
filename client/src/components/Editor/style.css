@@ -1469,8 +1469,8 @@ span.CodeMirror-selectedtext {
 .gjs-cv-canvas {
   box-sizing: border-box;
   background-color: #111111;
-  width: calc(100% - var(--gjs-left-width));
-  height: calc(100% - var(--gjs-canvas-top));
+  width: calc(100vh - var(--gjs-left-width));
+  height: calc(100vh - var(--gjs-canvas-top));
   bottom: 0;
   overflow: hidden;
   z-index: 1;

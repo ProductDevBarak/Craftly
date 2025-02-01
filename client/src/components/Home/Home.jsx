@@ -13,7 +13,7 @@ const Home = () => {
   const [open, setOpen] = useState(true);
   const [lopen, setLopen] = useState(false);
   const dropdownRef = useRef(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -30,9 +30,11 @@ const Home = () => {
     try {
       setLoading(true);
       const responseChat = await createChat(prompt, id, navigate);
-      setPrompt("");
-      setLoading(false);
       navigate(`/editor/${responseChat._id}`);
+      setTimeout(() => {
+        setPrompt("");
+        setLoading(false);
+      });
     } catch (error) {
       console.error("Error in handleSubmit:", error);
     }
@@ -70,20 +72,11 @@ const Home = () => {
     if (prompts.length > 0) fetchTitles();
   }, [prompts]);
 
-  useEffect(() => {
-    if (id) setLoading(false);
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
+      {loading && (
+        <div className="fixed h-screen w-screen bg-black opacity-50 z-40"></div>
+      )}
       <div className="absolute inset-0 -z-40 bg-[#141414]"></div>
       <div className="absolute inset-0 -z-10 bg-[url(../public/images/Group16.png)] opacity-20 bg-cover"></div>
       <div
