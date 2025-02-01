@@ -132,7 +132,6 @@ export default function App() {
             <div className="fixed bottom-4 left-4 z-10">
               {editorInstance && <RepromptButton editor={editorInstance} />}
             </div>
-            {/* <RepromptButton /> */}
           </div>
         </div>
         <ModalProvider>
