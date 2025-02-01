@@ -13,8 +13,9 @@ export default function RepromptButton({ editor }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const code = await getCode(id);
-        const result = code.HTML + "\n" + code.CSS;
+        const html = editor.getHtml();
+        const css = editor.getCss();
+        const result = html + "\n" + css;
         setSendCode(result);
       } catch (error) {
         console.error("Error fetching code:", error);
