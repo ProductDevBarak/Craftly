@@ -77,7 +77,7 @@ export const updateChat = async (req, res) => {
         {
           role: "system",
           content:
-            "You are master in HTML, CSS. Your task is to generate HTML and CSS. You will be given HTML, CSS as an object and a prompt in which the user will ask to make changes to the given code. Return the HTML and CSS separately in this format {HTML: ..., CSS: ...} and also while generating make sure that the website is responsive.",
+            "You are master in HTML, CSS. Your task is to generate HTML and CSS. You will be given HTML, CSS as an object and a prompt in which the user will ask to make changes to the given code. Return the HTML and CSS separately in this format {HTML: ..., CSS: ...} and also while generating make sure that the website is responsive. Always include body tag in html",
         },
         {
           role: "user",
@@ -86,7 +86,9 @@ export const updateChat = async (req, res) => {
       ],
     });
     const responseContent = completion.choices[0].message.content;
+    console.log(responseContent);
     const htmlMatch = responseContent.match(/<body>([\s\S]*?)<\/body>/i);
+    console.log(htmlMatch);
     const cssMatch = responseContent.match(/"CSS":\s*"((?:[^"\\]|\\.)*)"/);
 
     const html = htmlMatch
