@@ -28,6 +28,7 @@ export default function App() {
   const [editorInstance, setEditorInstance] = React.useState<Editor | null>(
     null
   );
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -87,50 +88,80 @@ export default function App() {
           },
           {
             id: "grapesjs-plugin-forms",
-            src: "https://unpkg.com/grapesjs-plugin-forms"
+            src: "https://unpkg.com/grapesjs-plugin-forms",
           },
           {
             id: "grapesjs-navbar",
-            src: "https://unpkg.com/grapesjs-navbar"
+            src: "https://unpkg.com/grapesjs-navbar",
           },
           {
-            id:"grapesjs-component-countdown",
-            src:"https://unpkg.com/grapesjs-component-countdown"
+            id: "grapesjs-component-countdown",
+            src: "https://unpkg.com/grapesjs-component-countdown",
           },
           {
-            id:"grapesjs-style-gradient",
-            src:"https://unpkg.com/grapesjs-style-gradient"
+            id: "grapesjs-style-gradient",
+            src: "https://unpkg.com/grapesjs-style-gradient",
           },
           {
             id: "grapesjs-style-filter",
-            src: "https://unpkg.com/grapesjs-style-filter"
+            src: "https://unpkg.com/grapesjs-style-filter",
           },
           {
             id: "grapesjs-tooltip",
-            src: "https://unpkg.com/grapesjs-tooltip"
+            src: "https://unpkg.com/grapesjs-tooltip",
           },
           {
             id: "grapesjs-custom-code",
-            src: "https://unpkg.com/grapesjs-custom-code"
+            src: "https://unpkg.com/grapesjs-custom-code",
           },
           {
             id: "grapesjs-user-blocks",
-            src: "https://unpkg.com/grapesjs-user-blocks"
+            src: "https://unpkg.com/grapesjs-user-blocks",
           },
           {
             id: "grapesjs-calendar-component",
-            src: "https://unpkg.com/grapesjs-calendar-component"
+            src: "https://unpkg.com/grapesjs-calendar-component",
           },
         ]}
         onEditor={onEditor}
       >
         <div className={`flex flex-col h-full`}>
+          {loading && (
+            <div className="fixed h-screen w-screen bg-black opacity-50 z-40"></div>
+          )}
+          {loading && (
+            <div className="flex items-center justify-center min-h-screen z-50 h-screen w-screen fixed bg-black bg-opacity-50">
+              <div className="relative">
+                <div className="relative w-20 h-20">
+                  <div
+                    className="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-r-[#0ff] border-b-[#0ff] animate-spin"
+                    style={{ animationDuration: "3s" }}
+                  ></div>
+
+                  <div
+                    className="absolute w-full h-full rounded-full border-[3px] border-gray-100/10 border-t-[#0ff] animate-spin"
+                    style={{
+                      animationDuration: "2s",
+                      animationDirection: "reverse",
+                    }}
+                  ></div>
+                </div>
+
+                <div class="absolute inset-0 bg-gradient-to-tr from-[#0ff]/10 via-transparent to-[#0ff]/5 animate-pulse rounded-full blur-sm"></div>
+              </div>
+            </div>
+          )}
           <Topbar className="h-[40px] bg-neutral-800" />
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />
             <div className="fixed bottom-4 left-4 z-10">
-              {editorInstance && <RepromptButton editor={editorInstance} />}
+              {editorInstance && (
+                <RepromptButton
+                  editor={editorInstance}
+                  setLoading={setLoading}
+                />
+              )}
             </div>
           </div>
         </div>
