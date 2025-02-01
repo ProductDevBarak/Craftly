@@ -13,6 +13,7 @@ const Home = () => {
   const [open, setOpen] = useState(true);
   const [lopen, setLopen] = useState(false);
   const dropdownRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -27,8 +28,10 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const responseChat = await createChat(prompt, id, navigate);
       setPrompt("");
+      setLoading(false);
       navigate(`/editor/${responseChat._id}`);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
@@ -40,7 +43,7 @@ const Home = () => {
       const response = await deleteCode({ id: e.target.id, userid: id });
       if (response.status === 200) {
         message.success("Code deleted successfully");
-        pageRefresh();
+        window.location.reload();
       }
     } catch (error) {
       message.error("Error deleting code");
@@ -66,6 +69,18 @@ const Home = () => {
 
     if (prompts.length > 0) fetchTitles();
   }, [prompts]);
+
+  useEffect(() => {
+    if (id) setLoading(false);
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden">
