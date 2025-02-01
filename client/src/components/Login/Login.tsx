@@ -44,10 +44,10 @@ const Login = () => {
       <div className="w-1/2 flex justify-center items-center">
         <img
           src={"/images/screen.png"}
-          className="max-w-[700px] border-r border-[#646464] pr-[100px] pl-[130px]"
+          className="max-w-[900px] pl-[130px]"
         />
       </div>
-      <div className="w-1/2 flex flex-col justify-center pr-10">
+      <div className="w-1/2 flex flex-col justify-center pr-10 border-l my-20 border-[#646464]">
         <div className="flex items-center mb-5">
           <img src={"/images/Logo.png"} className="h-9 mr-2 ml-52" />
         </div>
