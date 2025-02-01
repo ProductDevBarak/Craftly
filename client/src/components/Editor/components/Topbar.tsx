@@ -207,31 +207,7 @@ export default function Topbar({
               </svg>
             </button>
 
-            <div className="flex justify-between items-center mb-4 mr-8">
-              <h2 className="text-xl font-bold text-white">Code</h2>
-              <button
-                className="bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded flex items-center gap-2"
-                onClick={exportToZip}
-              >
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M23.5 22.5769C23.5 24.1913 22.1569 25.5 20.5 25.5H11.5C9.84314 25.5 8.5 24.1913 8.5 22.5769L8.50002 12.3462M14.5 6.5H13.75L8.50002 11.6154L8.50002 12.3462M14.5 6.5H20.5C22.1569 6.5 23.5 7.80871 23.5 9.42308L23.5 12.3462M14.5 6.5V12.3462H8.50002M14.5 17.4615H22.75M22.75 17.4615L19.75 14.5385M22.75 17.4615L19.75 20.3846"
-                    stroke="black"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span>Export to Zip</span>
-              </button>
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-5 flex-grow overflow-hidden">
+            <div className="flex flex-col md:flex-row gap-5 flex-grow overflow-hidden mt-8">
               <div className="bg-[#1E1E1E] p-4 rounded-lg border border-[#646464] text-white flex-1 overflow-hidden flex flex-col">
                 <h3 className="text-lg font-semibold mb-2">HTML</h3>
                 <div className="flex-grow overflow-auto p-2 border border-[#646464] rounded-md">
@@ -255,6 +231,29 @@ export default function Topbar({
                   </pre>
                 </div>
               </div>
+            </div>
+
+            <div className="flex justify-center items-center mt-4 mr-8">
+              <button
+                className="bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded flex items-center gap-2"
+                onClick={exportToZip}
+              >
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M23.5 22.5769C23.5 24.1913 22.1569 25.5 20.5 25.5H11.5C9.84314 25.5 8.5 24.1913 8.5 22.5769L8.50002 12.3462M14.5 6.5H13.75L8.50002 11.6154L8.50002 12.3462M14.5 6.5H20.5C22.1569 6.5 23.5 7.80871 23.5 9.42308L23.5 12.3462M14.5 6.5V12.3462H8.50002M14.5 17.4615H22.75M22.75 17.4615L19.75 14.5385M22.75 17.4615L19.75 20.3846"
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span>Export to Zip</span>
+              </button>
             </div>
           </div>
         </div>
