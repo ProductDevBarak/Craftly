@@ -25,9 +25,62 @@ export default function RepromptButton({ editorInstance, setLoading }) {
     e.preventDefault();
     try {
       setLoading(true);
+
       const html = editorInstance.getHtml();
       const css = editorInstance.getCss();
-      const result = html + "\n" + css;
+      const imgUrls = [
+        ...html.matchAll(/<img[^>]+src=\"([^\"]+)\"[^>]*>/g),
+      ].map((match) => match[1]);
+      const uploadPromises = imgUrls.map(async (url) => {
+        if (url.startsWith("data:image")) {
+          const byteString = atob(url.split(",")[1]);
+          const arrayBuffer = new ArrayBuffer(byteString.length);
+          const uint8Array = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < byteString.length; i++) {
+            uint8Array[i] = byteString.charCodeAt(i);
+          }
+          const blob = new Blob([uint8Array], {
+            type: url.split(",")[0].split(":")[1].split(";")[0],
+          });
+          const formData = new FormData();
+          formData.append("file", blob, "image.png");
+          const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+          const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+          if (!uploadPreset || !cloudName) {
+            console.error("Cloudinary credentials are missing!");
+            return null;
+          }
+          formData.append("upload_preset", uploadPreset);
+          try {
+            const res = await fetch(
+              `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
+            if (!res.ok) {
+              const errorData = await res.json();
+              console.error("Cloudinary error:", errorData);
+              return null;
+            }
+            const data = await res.json();
+            return { oldUrl: url, newUrl: data.secure_url };
+          } catch (error) {
+            console.error("Error uploading image to Cloudinary:", error);
+            return null;
+          }
+        }
+        return null;
+      });
+      const uploadedImages = (await Promise.all(uploadPromises)).filter(
+        Boolean
+      );
+      let modifiedHtml = html;
+      uploadedImages.forEach(({ oldUrl, newUrl }) => {
+        modifiedHtml = modifiedHtml.replaceAll(oldUrl, newUrl);
+      });
+      const result = modifiedHtml + "\n" + css;
       const responseChat = await updateChat(result, searchTerm, id);
       if (editorInstance) {
         editorInstance.setStyle(responseChat.CSS);
@@ -36,11 +89,10 @@ export default function RepromptButton({ editorInstance, setLoading }) {
         console.error("Editor not found");
       }
       setLoading(false);
-      setTimeout(() => {
-        setSearchTerm("");
-      });
+      setTimeout(() => setSearchTerm(""), 0);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
+      setLoading(false);
     }
   };
 
@@ -86,7 +138,7 @@ export default function RepromptButton({ editorInstance, setLoading }) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              class="size-5"
+              className="size-5"
             >
               <path
                 strokeLinecap="round"

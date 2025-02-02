@@ -6,7 +6,6 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 import { message } from "antd";
-
 import { html as beautifyHtml, css as beautifyCss } from "js-beautify";
 import { saveCode } from "../../../utils/code.js";
 import { useNavigate } from "react-router-dom";
@@ -84,17 +83,83 @@ export default function Topbar({
       message.error("There was an error saving the code");
       return;
     }
-    const latestHTML = editorInstance.getHtml();
-    const latestCSS = editorInstance.getCss();
+
+    const key = "saving"; // Unique key for loading message
+    message.loading({ content: "Saving...", key });
+
+    const html = editorInstance.getHtml();
+    const css = editorInstance.getCss();
+    const imgUrls = [...html.matchAll(/<img[^>]+src=\"([^\"]+)\"[^>]*>/g)].map(
+      (match) => match[1]
+    );
+
+    const uploadPromises = imgUrls.map(async (url) => {
+      if (url.startsWith("data:image")) {
+        const byteString = atob(url.split(",")[1]);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+          uint8Array[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([uint8Array], {
+          type: url.split(",")[0].split(":")[1].split(";")[0],
+        });
+
+        const formData = new FormData();
+        formData.append("file", blob, "image.png");
+
+        const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+        const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+
+        if (!uploadPreset || !cloudName) {
+          console.error("Cloudinary credentials are missing!");
+          return null;
+        }
+
+        formData.append("upload_preset", uploadPreset);
+
+        try {
+          const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (!res.ok) {
+            const errorData = await res.json();
+            console.error("Cloudinary error:", errorData);
+            return null;
+          }
+          const data = await res.json();
+          return { oldUrl: url, newUrl: data.secure_url };
+        } catch (error) {
+          console.error("Error uploading image to Cloudinary:", error);
+          return null;
+        }
+      }
+      return null;
+    });
+
+    const uploadedImages = (await Promise.all(uploadPromises)).filter(
+      (img): img is { oldUrl: string; newUrl: string } => img !== null
+    );
+
+    let modifiedHtml = html;
+    uploadedImages.forEach(({ oldUrl, newUrl }) => {
+      modifiedHtml = modifiedHtml.replaceAll(oldUrl, newUrl);
+    });
 
     try {
-      const response = await saveCode(id, latestHTML, latestCSS);
+      const response = await saveCode(id, modifiedHtml, css);
       if (response.status === 200) {
-        message.success("Saved successfully!");
+        message.success({ content: "Saved successfully!", key });
+      } else {
+        message.error({ content: "Failed to save!", key });
       }
     } catch (error) {
       console.error("Error saving content:", error);
-      message.error("Failed to Save!");
+      message.error({ content: "Failed to Save!", key });
     }
   };
 
