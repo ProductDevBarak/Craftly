@@ -151,9 +151,9 @@ const Landing = () => {
           </div>
         </div>
       </header>
-      <main className="w-full flex flex-col items-center justify-center flex-grow pt-10">
+      <main className="w-full flex flex-col items-center justify-center flex-grow pt-8">
         <div className="flex flex-col text-center max-w-4xl mx-auto">
-          <h1 className="text-[50px] font-sans leading-tight font-bold">
+          <h1 className="text-[46px] font-sans leading-tight font-bold">
             Transform Your Ideas into Stunning Websites Instantly
           </h1>
           <h3 className="mt-4 mb-8 text-lg font-sans font-semibold">
@@ -163,12 +163,12 @@ const Landing = () => {
           <div className="flex justify-center">
             <img
               src="/images/Landing.png"
-              className="max-w-[120%] h-[19rem]"
+              className="max-w-[100%] h-[15rem]"
               alt="Landing"
             />
           </div>
           <button
-            className="mt-[3.75rem] px-8 py-3 bg-white text-black text-sm hover:bg-gray-100 rounded-full max-w-fit mx-auto font-dmSans font-semibold"
+            className="mt-3 px-8 py-3 bg-white text-black text-sm hover:bg-gray-100 rounded-full max-w-fit mx-auto font-dmSans font-semibold"
             onClick={() => (id ? navigate("/home") : navigate("/login"))}
           >
             Get Started

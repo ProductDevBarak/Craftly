@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { is } from "date-fns/locale";
 import React from "react";
 
 const CustomAccordion = ({

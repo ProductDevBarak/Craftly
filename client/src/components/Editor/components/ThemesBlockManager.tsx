@@ -2,14 +2,6 @@ import React from "react";
 
 const colorPalettes = [
   {
-    name: "Soft Glow",
-    colors: ["#F7F7F7",  "#141414", "#FFF08A", "#D9EBFE"]
-  },
-  {
-    name: "Royal Nocturne",
-    colors: ["#1E1741",  "#796BE7", "#020202", "#FFFFFF"]
-  },
-  {
     name: "Electric Monochrome",
     colors: ["#DADADA",  "#3A47EE", "#020202", "#FFFFFF"]
   },
@@ -22,12 +14,8 @@ const colorPalettes = [
     colors: ["#F4EAE1",  "#EEA7A6", "#F5F5F5", "#59071D"]
   },
   {
-    name: "Urban Dusk",
-    colors: ["#1E1E1E",  "#2E2B2C", "#EAEAEA", "#E87163"]
-  },
-  {
     name: "Harvest Grove",
-    colors: ["#C2C2C2",  "#F5F5F5", "#2B4B31", "#F5A101"]
+    colors: ["#C2C2C2", "#F5A101", "#2B4B31",  "#F5F5F5"]
   },
 ];
 

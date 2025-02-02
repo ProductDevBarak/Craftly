@@ -17,6 +17,7 @@ export const createChat = async (prompt, userid, navigate) => {
 
 export const updateChat = async (code, prompt, id) => {
   try {
+    console.log(code);
     const response = await axios.post(`${backendURL}/code/update/${id}`, {
       code,
       prompt,

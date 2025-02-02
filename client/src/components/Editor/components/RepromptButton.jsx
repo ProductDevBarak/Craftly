@@ -1,14 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { updateChat, getCode } from "../../../utils/code";
-import { Editor, EditorConfig } from "grapesjs";
+import { updateChat } from "../../../utils/code";
 import * as React from "react";
 
 export default function RepromptButton({ editorInstance, setLoading }) {
   const { id } = useParams();
   const [state, setState] = useState("normal");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sendCode, setSendCode] = useState("");
   const ref = useRef(null);
 
   useEffect(() => {
@@ -30,8 +28,7 @@ export default function RepromptButton({ editorInstance, setLoading }) {
       const html = editorInstance.getHtml();
       const css = editorInstance.getCss();
       const result = html + "\n" + css;
-      await setSendCode(result);
-      const responseChat = await updateChat(sendCode, searchTerm, id);
+      const responseChat = await updateChat(result, searchTerm, id);
       if (editorInstance) {
         editorInstance.setStyle(responseChat.CSS);
         editorInstance.setComponents(responseChat.HTML);

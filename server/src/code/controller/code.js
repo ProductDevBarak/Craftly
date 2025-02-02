@@ -76,8 +76,9 @@ export const createChat = async (req, res) => {
 
 export const updateChat = async (req, res) => {
   const repromptBase = `I am giving you my code ${req.body.code}. Do not change it, only add ${req.body.prompt}. Keep the rest of the code intact.`;
-
+  
   try {
+    console.log(req.body.code);
     const completion = await reprompt.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -99,7 +100,6 @@ export const updateChat = async (req, res) => {
         },
       ],
     });
-
     let responseContent = completion.choices[0].message.content;
     console.log("Raw API Response:", responseContent);
     responseContent = responseContent

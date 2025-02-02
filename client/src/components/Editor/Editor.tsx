@@ -14,6 +14,7 @@ import RepromptButton from "./components/RepromptButton.jsx";
 import "./style.css";
 import { getCode, saveCode } from "../../utils/code";
 import { Navigate, useParams } from "react-router-dom";
+import AutoDeployButton from "./components/Autodeploy.jsx";
 
 const theme = createTheme({
   palette: {
@@ -155,10 +156,11 @@ export default function App() {
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />
+            <AutoDeployButton editor = {editorInstance} />
             <div className="fixed bottom-4 left-4 z-10">
               {editorInstance && (
                 <RepromptButton
-                  editor={editorInstance}
+                  editorInstance={editorInstance}
                   setLoading={setLoading}
                 />
               )}

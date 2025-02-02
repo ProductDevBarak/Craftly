@@ -4,6 +4,7 @@ import Logout from "../Login/LogOut.tsx";
 import { createChat, getCode, deleteCode } from "../../utils/code.js";
 import { useUser } from "../../context/UserContext";
 import { message } from "antd";
+import Loader from "./Loader.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -238,7 +239,7 @@ const Home = () => {
         {!open && (
           <div className="fixed right-[12px] top-[100px] h-[calc(100vh-120px)] w-[300px] bg-[#1E1E1E] text-white border mx-2 mb-8 border-gray-700 shadow-lg flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
-              <span className="text-lg font-medium">
+              <span className="text-lg font-dmSans font-semibold">
                 Your previous projects
               </span>
               <button
