@@ -94,7 +94,7 @@ export default function LayerItem({
   );
 
   return (
-    <div className={wrapperCls}>
+    <div className={wrapperCls} >
       <div
         onClick={select}
         onMouseEnter={() => hover(true)}
@@ -105,7 +105,7 @@ export default function LayerItem({
       >
         <div
           className={cx(
-            `flex items-center p-1 pr-2  mr-3 mb-[-4]`,
+            `flex items-center p-1 pr-2  mr-3 mb-[-4] `,
             (!components.length) && 'gap-0',
             components.length && 'gap-1.5',
             level === 0
@@ -120,7 +120,7 @@ export default function LayerItem({
           )}
           onClick={toggleVisibility}
         >
-          <svg width="19.13" height="13" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="19.13" height="13" viewBox="0 0 22 16" fill="none" className={open ? "text-green-300" : "text-white"} xmlns="http://www.w3.org/2000/svg">
             <g id="eye">
               <path d="M20.1296 8.46875C20.1296 9.78572 15.8473 14.9688 10.5648 14.9688C5.2823 14.9688 1 9.78572 1 8.46875C1 7.15178 5.2823 1.96875 10.5648 1.96875C15.8473 1.96875 20.1296 7.15178 20.1296 8.46875Z" fill="white"/>
               <path d="M14.7733 6.17463C14.7733 8.49748 12.8891 10.3805 10.5648 10.3805C8.24053 10.3805 6.35632 8.49748 6.35632 6.17463C6.35632 3.85179 8.24049 1.96875 10.5648 1.96875C12.8891 1.96875 14.7733 3.85179 14.7733 6.17463Z" fill="white"/>
@@ -131,11 +131,11 @@ export default function LayerItem({
           <div
             className={cx(
               'cursor-pointer',
-              !components.length && 'pointer-events-none opacity-0'
+              !components.length && 'pointer-events-none opacity-0',
             )}
             onClick={toggleOpen}
           >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: `rotate(${open ? 0 : -90}deg)`, transition: 'transform 0.25s ease' }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={open ? "text-green-300" : "text-white"} style={{ transform: `rotate(${open ? 0 : -90}deg)`, transition: 'transform 0.25s ease' }}>
               <g id="Controls">
                 <path id="chevron-up" d="M14.0625 7.4375L9 12.5L3.9375 7.4375" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </g>
@@ -143,13 +143,14 @@ export default function LayerItem({
           </div>
           <div className={cx(
               'truncate flex-grow font-sans text-sm',
-              !components.length && 'pointer-events-none ml-[-10]'
+              open? 'text-green-300':'text-white',
+              !components.length && 'pointer-events-none ml-[-10] '
             )}
-            onClick={toggleOpen} style={{...itemStyle, fontFamily: 'inter'}}>
+            onClick={toggleOpen} style={{...itemStyle, fontFamily: 'inter',}}>
             {name}
           </div>
           <div className='hover:cursor-pointer'>
-          <svg width="24" height="24" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="24" height="24" viewBox="0 0 35 34" fill="none" className={open ? "text-green-300" : "text-white"} xmlns="http://www.w3.org/2000/svg">
             <g id="Controls">
             <path id="diagonals-outsight" d="M13.7422 10.2527L17.1 6.89492L20.4588 10.2537M17.1015 6.8972L17.1004 27.0479M13.7441 23.686L17.1028 27.0447L20.4606 23.6869M23.8184 20.329L27.1763 16.9712L23.8175 13.6124M27.1741 16.9698L7.02332 16.9708M10.3853 20.3272L7.02652 16.9684L10.3843 13.6106" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
             </g>
