@@ -19,8 +19,8 @@ export const createChat = async (req, res) => {
     const basePrompt = `
       You are master in HTML, CSS and bootstrap. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is:
       1) Responsive,
-      2) Has good color combinations, gradients, and shadows which aligns with ${req.body.prompt} and represents calmness and mordern touch
-      3) Add few quotes and must have content for ${req.body.prompt}
+      2) Has good color combinations, gradients, and shadows which aligns with '${req.body.prompt} ' and represents calmness and mordern touch.
+      3) Add few quotes and must have content for '${req.body.prompt}'.
       4) Make the website attractive, and
       5) Add animations and transitions,
       6) Use good fonts and icons related to the website,
@@ -65,11 +65,9 @@ export const createChat = async (req, res) => {
       HTML: html,
       CSS: css,
     });
-    // console.log(code);
     const user = await User.findById(req.body.userid);
     user.prompts.push(code._id);
     await user.save();
-    // console.log(code);
     res.json(code);
   } catch (error) {
     console.error(error);
@@ -99,7 +97,7 @@ export const updateChat = async (req, res) => {
     const htmlMatch = responseContent.match(/<body>([\s\S]*?)<\/body>/i);
     console.log(htmlMatch);
     var cssMatch = responseContent.match(/"CSS":\s*"((?:[^"\\]|\\.)*)"/i);
-    if(cssMatch === null){
+    if (cssMatch === null) {
       cssMatch = responseContent.match(/"\w+":\s*"((?:[^"\\]|\\.)*)"/i);
     }
     const html = htmlMatch
@@ -125,6 +123,20 @@ export const getCode = async (req, res) => {
     if (!code) {
       return res.status(404).json({ error: "Code not found" });
     }
+    res.json(code);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const saveCode = async (req, res) => {
+  try {
+    console.log(req.body);
+    const code = await Code.findByIdAndUpdate(req.params.id, {
+      HTML: req.body.editorHTML,
+      CSS: req.body.editorCSS,
+    });
     res.json(code);
   } catch (error) {
     console.error(error);

@@ -53,10 +53,6 @@ const Home = () => {
     }
   };
 
-  const pageRefresh = () => {
-    window.location.reload();
-  };
-
   useEffect(() => {
     const fetchTitles = async () => {
       try {

@@ -28,12 +28,12 @@ export default function CustomBlockManager({
 
   const toogleMade = () => {
     setIsMadeVisible((prev) => !prev);
-  }
+  };
 
   return (
     <div className="custom-block-manager">
       <div
-        className="flex items-center justify-between pt-3 px-4 cursor-pointer"
+        className="flex items-center justify-between pt-3 px-4 cursor-pointer mb-4"
         onClick={toggleThemes}
       >
         <h1 className="text-lg font-sans text-[300]">Themes</h1>
@@ -60,10 +60,10 @@ export default function CustomBlockManager({
       </div>
       {isThemesVisible && <ThemesBlockManager />}
       <div
-        className="flex items-center justify-between pt-3 px-4 cursor-pointer"
+        className="flex items-center justify-between pt-4 px-4 cursor-pointer border-t border-[#646464]"
         onClick={toggleMore}
       >
-        <h1 className="text-lg font-sans text-[300]">More</h1>
+        <h1 className="text-lg font-sans text-[300] mb-2">More</h1>
         <button className="py-1 text-white rounded">
           <svg
             className={`transform transition-transform duration-300 ${

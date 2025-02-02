@@ -92,7 +92,7 @@ const Counter = ({ defValue, val, onChange }) => {
           style={{
             position: "absolute",
             right: "28px",
-            top: "4px",
+            top: "6px",
             cursor: "pointer",
           }}
           transform="rotate(180)"

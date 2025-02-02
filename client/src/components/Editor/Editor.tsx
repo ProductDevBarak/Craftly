@@ -12,8 +12,8 @@ import Topbar from "./components/Topbar.tsx";
 import RightSidebar from "./components/RightSidebar.tsx";
 import RepromptButton from "./components/RepromptButton.jsx";
 import "./style.css";
-import { getCode } from "../../utils/code";
-import { useParams } from "react-router-dom";
+import { getCode, saveCode } from "../../utils/code";
+import { Navigate, useParams } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -118,10 +118,6 @@ export default function App() {
             id: "grapesjs-user-blocks",
             src: "https://unpkg.com/grapesjs-user-blocks",
           },
-          {
-            id: "grapesjs-calendar-component",
-            src: "https://unpkg.com/grapesjs-calendar-component",
-          },
         ]}
         onEditor={onEditor}
       >
@@ -147,11 +143,15 @@ export default function App() {
                   ></div>
                 </div>
 
-                <div class="absolute inset-0 bg-gradient-to-tr from-[#0ff]/10 via-transparent to-[#0ff]/5 animate-pulse rounded-full blur-sm"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#0ff]/10 via-transparent to-[#0ff]/5 animate-pulse rounded-full blur-sm"></div>
               </div>
             </div>
           )}
-          <Topbar className="h-[40px] bg-neutral-800" />
+          <Topbar
+            className="h-[40px] bg-neutral-800"
+            editorInstance={editorInstance}
+            id={id}
+          />
           <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />

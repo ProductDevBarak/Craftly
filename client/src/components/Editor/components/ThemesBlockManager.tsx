@@ -64,7 +64,8 @@ const ColorBars = () => {
 
       Object.keys(ruleStyle).forEach((prop) => {
         if (cssVariableMapping.hasOwnProperty(prop)) {
-          const colorIndex = cssVariableMapping[prop as keyof typeof cssVariableMapping];
+          const colorIndex =
+            cssVariableMapping[prop as keyof typeof cssVariableMapping];
           updatedStyles[prop] = palette.colors[colorIndex];
         } else {
           console.warn(`No mapping found for CSS variable: ${prop}`);
@@ -80,7 +81,7 @@ const ColorBars = () => {
   };
 
   return (
-    <div className="p-4 space-y-4 text-white">
+    <div className="px-4 pb-8 space-y-4 text-white">
       {colorPalettes.map((palette, index) => (
         <div key={index} className="space-y-2">
           <div className="text-left font-inter text-sm">{palette.name}</div>

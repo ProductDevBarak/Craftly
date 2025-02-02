@@ -4,7 +4,8 @@ import StylePropertyField from "./StylePropertyField.tsx";
 
 function BasicStyleManager({ sectors }) {
   const basicSectors = [
-    { name: "Dimensions & Layout", attributes: [] },
+    { name: "Dimensions", attributes: [] },
+    { name: "Layout", attributes: [] },
     { name: "Text Editor", attributes: [] },
     { name: "Appearance", attributes: [] },
     { name: "Border", attributes: [] },
@@ -15,6 +16,12 @@ function BasicStyleManager({ sectors }) {
       if (
         p.id === "width" ||
         p.id === "height" ||
+        p.id === "min-height" ||
+        p.id === "max-width"
+      ) {
+        basicSectors[0].attributes.push({ id: p.getId(), prop: p });
+      }
+      if (
         p.id === "display" ||
         p.id === "position" ||
         p.id === "top" ||
@@ -22,7 +29,7 @@ function BasicStyleManager({ sectors }) {
         p.id === "left" ||
         p.id === "right"
       ) {
-        basicSectors[0].attributes.push({ id: p.getId(), prop: p });
+        basicSectors[1].attributes.push({ id: p.getId(), prop: p });
       }
       if (
         p.id === "font-family" ||
@@ -33,18 +40,23 @@ function BasicStyleManager({ sectors }) {
         p.id === "text-align" ||
         p.id === "text-shadow"
       ) {
-        basicSectors[1].attributes.push({ id: p.getId(), prop: p });
-      }
-      if (p.id === "opacity") {
         basicSectors[2].attributes.push({ id: p.getId(), prop: p });
       }
-      if (p.id === "border" || p.id === "border-radius") {
+      if (p.id === "opacity") {
         basicSectors[3].attributes.push({ id: p.getId(), prop: p });
       }
-      if (p.id === "background") {
+      if (p.id === "border" || p.id === "border-radius") {
         basicSectors[4].attributes.push({ id: p.getId(), prop: p });
       }
+      if (p.id === "background" || p.id === "background-color") {
+        basicSectors[5].attributes.push({ id: p.getId(), prop: p });
+      }
     });
+    if (basicSectors[2].attributes.length > 4) {
+      const temp = basicSectors[2].attributes[3];
+      basicSectors[2].attributes[3] = basicSectors[2].attributes[4];
+      basicSectors[2].attributes[4] = temp;
+    }
   });
 
   return (
@@ -57,12 +69,12 @@ function BasicStyleManager({ sectors }) {
             title={sector.name}
             className=""
             size="sm"
-            colour= "gray-300"
+            colour="gray-300"
             svg="Gray"
             font="inter"
             border="no"
           >
-            <div className="flex flex-wrap p-4">
+            <div className="flex flex-wrap pt-2 px-8 ">
               {sector.attributes.map((prop) => (
                 <StylePropertyField key={prop.id} prop={prop.prop} />
               ))}
@@ -75,19 +87,3 @@ function BasicStyleManager({ sectors }) {
 }
 
 export default BasicStyleManager;
-
-{
-  /* {sectors.map((sector) => (
-        <CustomAccordion
-          key={sector.getId()}
-          title={sector.getName()}
-          className=""
-        >
-          <div className="flex flex-wrap">
-            {sector.getProperties().map((prop) => (
-              <StylePropertyField key={prop.getId()} prop={prop} />
-            ))}
-          </div>
-        </CustomAccordion>
-      ))} */
-}

@@ -8,14 +8,10 @@ import {
   mdiPlus,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-// import FormControl from "@mui/material/FormControl";
-// import FormControlLabel from "@mui/material/FormControlLabel";
 import CustomSelect from "./Select.tsx";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-// import MenuItem from "@mui/material/MenuItem";
 import CustomRadioGroup from "./Radio.jsx";
-// import Select from "@mui/material/Select";
 import Slider from "./Slider.jsx";
 import TextField from "@mui/material/TextField";
 import Counter from "./Counter.jsx";
@@ -77,38 +73,23 @@ export default function StylePropertyField({
     //   size="small"
     //   fullWidth
     // />
-    <Counter 
-        defValue={defValue}
-        val={valueString}
-        onChange={handleChange}
-    />
+    <Counter defValue={defValue} val={valueString} onChange={handleChange} />
   );
 
   switch (type) {
     case "radio":
       {
         const radioProp = prop as PropertyRadio;
-        inputToRender =
-          // <RadioGroup value={value} onChange={onChange} row>
-          //   {radioProp.getOptions().map((option) => (
-          //     <FormControlLabel
-          //       key={radioProp.getOptionId(option)}
-          //       value={radioProp.getOptionId(option)}
-          //       label={radioProp.getOptionLabel(option)}
-          //       control={<Radio size="small" />}
-          //     />
-          //   ))}
-          // </RadioGroup>
-          inputToRender = (
-            <CustomRadioGroup
-              options={radioProp.getOptions().map((option) => ({
-                label: radioProp.getOptionLabel(option),
-                value: radioProp.getOptionId(option),
-              }))}
-              defaultValue={value} // Pass the default value
-              onChange={onChange2} // Pass the change handler
-            />
-          );
+        inputToRender = (
+          <CustomRadioGroup
+            options={radioProp.getOptions().map((option) => ({
+              label: radioProp.getOptionLabel(option),
+              value: radioProp.getOptionId(option),
+            }))}
+            defaultValue={value} // Pass the default value
+            onChange={onChange2} // Pass the change handler
+          />
+        );
       }
       break;
     case "select":
@@ -226,8 +207,8 @@ export default function StylePropertyField({
               ROUND_BORDER_COLOR
             )}
             style={{
-              minHeight: "40px", 
-              borderRadius: "12px", 
+              minHeight: "40px",
+              borderRadius: "12px",
             }}
           >
             {layers.map((layer) => (
@@ -282,7 +263,7 @@ export default function StylePropertyField({
   return (
     <div
       {...rest}
-      className={cx("mb-3 px-1 text-sm", prop.isFull() ? "w-full" : "w-1/2")}
+      className={cx("mb-4 px-1 text-sm", prop.isFull() ? "w-full" : "w-1/2")}
     >
       <div className={cx("flex mb-2 items-center", canClear && "text-sky-300")}>
         <div className="flex-grow capitalize">{prop.getLabel()}</div>

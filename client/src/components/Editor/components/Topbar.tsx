@@ -5,16 +5,22 @@ import TopbarButtons from "./TopbarButtons.tsx";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useState } from "react";
+import { message } from "antd";
 
 import { html as beautifyHtml, css as beautifyCss } from "js-beautify";
+import { saveCode } from "../../../utils/code.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Topbar({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+  editorInstance,
+  id,
+}: React.HTMLAttributes<HTMLDivElement> & { editorInstance?: any }) {
   const [showPopup, setShowPopup] = useState(false);
   const editor = (window as any).editor;
   const [formattedHtml, setFormattedHtml] = useState("");
   const [formattedCss, setFormattedCss] = useState("");
+  const navigate = useNavigate();
 
   const prettifyHtml = (html: string) => {
     return beautifyHtml(html, {
@@ -42,6 +48,7 @@ export default function Topbar({
       setFormattedCss(prettifyCss(rawCss));
     }
   }, [showPopup, editor]);
+
   const exportToZip = () => {
     const editor = (window as any).editor;
     if (editor) {
@@ -72,6 +79,25 @@ export default function Topbar({
     setShowPopup(false);
   };
 
+  const handleSave = async () => {
+    if (!editorInstance) {
+      message.error("There was an error saving the code");
+      return;
+    }
+    const latestHTML = editorInstance.getHtml();
+    const latestCSS = editorInstance.getCss();
+
+    try {
+      const response = await saveCode(id, latestHTML, latestCSS);
+      if (response.status === 200) {
+        message.success("Saved successfully!");
+      }
+    } catch (error) {
+      console.error("Error saving content:", error);
+      message.error("Failed to Save!");
+    }
+  };
+
   return (
     <div
       className={cx(
@@ -83,6 +109,49 @@ export default function Topbar({
         className="flex items-center justify-center relative"
         style={{ width: "calc(100% - 350px)" }}
       >
+        <div className="absolute flex gap-2 left-2 text-white rounded cursor-pointer">
+          <div
+            className="hover:bg-neutral-700 p-1 rounded-md"
+            onClick={() => navigate("/home")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="white"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+              />
+            </svg>
+          </div>
+
+          <div
+            className="hover:bg-neutral-700 p-1 rounded-md"
+            onClick={() => {
+              handleSave();
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="white"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6A2.25 2.25 0 0 1 6 3.75h1.5m9 0h-9"
+              />
+            </svg>
+          </div>
+        </div>
         <DevicesProvider>
           {({ selected, select, devices }) => (
             <div className="flex justify-center flex-grow">
