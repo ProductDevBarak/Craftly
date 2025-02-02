@@ -143,8 +143,9 @@ export default function LayerItem({
           </div>
           <div
             className={cx(
-              "cursor-pointer",
-              !components.length && "pointer-events-none opacity-0"
+              "truncate flex-grow font-dmSans text-sm",
+              open ? "text-green-300" : "text-white",
+              !components.length && "pointer-events-none ml-[-10] "
             )}
             onClick={toggleOpen}
           >

@@ -6,6 +6,7 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 import { message } from "antd";
+import AutoDeployButton from "./Autodeploy.jsx";
 import { html as beautifyHtml, css as beautifyCss } from "js-beautify";
 import { saveCode } from "../../../utils/code.js";
 import { useNavigate } from "react-router-dom";
@@ -84,7 +85,7 @@ export default function Topbar({
       return;
     }
 
-    const key = "saving"; // Unique key for loading message
+    const key = "saving";
     message.loading({ content: "Saving...", key });
 
     const html = editorInstance.getHtml();
@@ -295,9 +296,11 @@ export default function Topbar({
           </WithEditor>
         </div>
       </div>
-
+      <div className="ml-28">
+        <AutoDeployButton editor={editorInstance} />
+      </div>
       <button
-        className="bg-white text-black px-2 pr-3 py-1 text-sm font-sm font-dmSans font-semibold rounded mx-2 flex gap-1 items-center justify-between hover:bg-gray-200"
+        className="bg-white text-black px-2 pr-3 py-1 text-sm font-sm font-dmSans font-semibold rounded-md mx-2 flex gap-1 items-center justify-between hover:bg-gray-200"
         onClick={handleClick}
       >
         <svg

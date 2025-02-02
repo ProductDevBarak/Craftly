@@ -53,7 +53,7 @@ const Login = () => {
           One Step to Your Creation
         </h2>
         <div className="bg-white text-black py-8 px-5 rounded-lg shadow-lg w-full max-w-[290px] ml-[10.6rem]">
-          <h3 className="text-lg font-sans text-center mb-4 text-[#000000]">
+          <h3 className="text-lg font-dmSans text-center mb-4 text-[#000000]">
             Create your Account
           </h3>
           <button
@@ -63,12 +63,12 @@ const Login = () => {
             <span className="mr-2">
               <img src={"/images/microsoft.png"} className="h-5" />
             </span>
-            <h1 className="font-sans pr-2 font-light">
+            <h1 className="font-dmSans pr-2 font-light">
               Sign in with Microsoft
             </h1>
           </button>
 
-          <p className="text-center text-sm text-black font-sans font-extralight">
+          <p className="text-center text-sm text-black font-dmSans font-extralight">
             Or
           </p>
           <input

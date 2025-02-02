@@ -63,7 +63,7 @@ export default function CustomBlockManager({
         className="flex items-center justify-between pt-4 px-4 cursor-pointer border-t border-[#646464]"
         onClick={toggleMore}
       >
-        <h1 className="text-lg font-sans text-[300] mb-2">More</h1>
+        <h1 className="text-lg font-dmSans text-[300] mb-2">More</h1>
         <button className="py-1 text-white rounded">
           <svg
             className={`transform transition-transform duration-300 ${
