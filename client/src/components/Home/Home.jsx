@@ -213,10 +213,10 @@ const Home = () => {
 
       <main className="w-full flex flex-grow pt-20 pr-48">
         <div className="flex flex-col flex-grow text-center">
-          <h1 className="text-[50px] px-96 font-sans leading-tight">
+          <h1 className="text-[50px] px-96 font-sans leading-tight font-bold">
             Start building your dream website
           </h1>
-          <h3 className="mt-4 mb-8 text-lg">
+          <h3 className="mt-4 mb-8 text-lg font-sans font-semibold">
             Describe your website in a few words, and we’ll take it from there
           </h3>
           <div className="flex justify-center items-center mt-10">
@@ -224,26 +224,17 @@ const Home = () => {
               type="text"
               value={prompt}
               placeholder="Enter your prompt"
-              className="w-1/2 p-3 rounded-lg text-black"
+              className="w-1/2 p-3 rounded-full border-[#ADD134] border-2 text-black px-6 outline-none placeholder-gray-500"
               onChange={(e) => setPrompt(e.target.value)}
             />
             <button
               onClick={handleSubmit}
               className="ml-4 bg-gray-700 hover:bg-gray-600 text-white rounded-full p-4"
             >
-              <svg
-                width="24"
-                height="21"
-                viewBox="0 0 24 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 10.5H21.5M21.5 10.5L13 2M21.5 10.5L13 19"
-                  stroke="white"
-                  strokeWidth="3"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
               </svg>
+
             </button>
           </div>
         </div>

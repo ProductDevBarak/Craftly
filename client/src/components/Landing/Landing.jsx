@@ -78,7 +78,7 @@ const Landing = () => {
             x: [
               pos.x,
               Math.min(
-                pos.x + (Math.random() * 400 - 50),
+                pos.x + (Math.random() * 400 + 1000),
                 containerRef.current.clientWidth - 50
               ),
               pos.x,
@@ -86,7 +86,7 @@ const Landing = () => {
             y: [
               pos.y,
               Math.min(
-                pos.y + (Math.random() * 100 - 50),
+                pos.y + (Math.random() * 800 - 50),
                 containerRef.current.clientHeight - 100
               ),
               pos.y,
@@ -156,19 +156,19 @@ const Landing = () => {
           <h1 className="text-[50px] font-sans leading-tight font-bold">
             Transform Your Ideas into Stunning Websites Instantly
           </h1>
-          <h3 className="mt-4 mb-8 text-lg">
+          <h3 className="mt-4 mb-8 text-lg font-sans font-semibold">
             Get your responsive website in just 3 steps.{" "}
             <span className="text-[#f2b635]"> No coding required.</span>
           </h3>
           <div className="flex justify-center">
             <img
               src="/images/Landing.png"
-              className="max-w-full h-auto"
+              className="max-w-[120%] h-[19rem]"
               alt="Landing"
             />
           </div>
           <button
-            className="mt-8 px-8 py-3 bg-white text-black text-sm hover:bg-gray-100 rounded-full max-w-fit mx-auto"
+            className="mt-[3.75rem] px-8 py-3 bg-white text-black text-sm hover:bg-gray-100 rounded-full max-w-fit mx-auto font-dmSans font-semibold"
             onClick={() => (id ? navigate("/home") : navigate("/login"))}
           >
             Get Started

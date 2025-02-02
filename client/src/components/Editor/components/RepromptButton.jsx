@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { updateChat, getCode } from "../../../utils/code";
 import { Editor, EditorConfig } from "grapesjs";
+import * as React from "react";
 
 export default function RepromptButton({ editor, setLoading }) {
   const { id } = useParams();
@@ -13,8 +14,9 @@ export default function RepromptButton({ editor, setLoading }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const html = editor.getHtml();
-        const css = editor.getCss();
+        const code = await getCode(id);
+        const html = code.HTML;
+        const css = code.CSS;
         const result = html + "\n" + css;
         setSendCode(result);
       } catch (error) {
@@ -41,12 +43,9 @@ export default function RepromptButton({ editor, setLoading }) {
     try {
       setLoading(true);
       const responseChat = await updateChat(sendCode, searchTerm, id);
-      console.log("patience");
       if (editor) {
         editor.setStyle(responseChat.CSS);
         editor.setComponents(responseChat.HTML);
-        console.log(responseChat.CSS);
-        console.log(responseChat.HTML);
       } else {
         console.error("Editor not found");
       }
@@ -87,22 +86,24 @@ export default function RepromptButton({ editor, setLoading }) {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 p-2 bg-white text-black placeholder-black border-none focus:outline-none font-dmSans"
+            className="flex-1 p-2 bg-white text-black placeholder-gray-400 border-none focus:outline-none font-dmSans"
             autoFocus
             placeholder="Fine-tune your prompt here"
           />
           <button
             onClick={handleSubmit}
-            className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+            className=" bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3"
           >
-            Submit
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+              </svg>
           </button>
         </div>
       ) : (
         <div className="border-animation">
           <button
             className={`flex items-center gap-2 p-4 rounded-full bg-white text-black cursor-pointer transition-all duration-300 animated-button ${
-              state === "hovered" ? "w-48" : "w-12"
+              state === "hovered" ? "w-64" : "w-12"
             }`}
             onMouseEnter={() => setState("hovered")}
             onMouseLeave={() => setState("normal")}
@@ -124,7 +125,7 @@ export default function RepromptButton({ editor, setLoading }) {
             </svg>
             {state === "hovered" && (
               <div className="text-black font-dmSans">
-                Fine-tune your prompt
+                <h1 className="text-black font-dmSans">Fine-tune your prompt</h1>
               </div>
             )}
           </button>

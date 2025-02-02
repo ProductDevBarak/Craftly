@@ -54,7 +54,7 @@ const CustomAccordion = ({ title, children, className, size, colour, font, svg, 
     <div className={`custom-accordion ${className} border-t border-[#646464] mb-4 pt-3`}>
       {/* Accordion Header */}
       <div
-        className={`accordion-header cursor-pointer flex items-center align-middle justify-between px-4 pt-2 pb-2 font-${font} ${textSizeClass}  text-${colour}`}
+        className={`accordion-header cursor-pointer flex items-center align-middle justify-between px-4 pt-2 pb-2 font-${font} ${textSizeClass} font-inter text-[15px]  text-${colour}`}
         onClick={toggleAccordion}
       >
         <span>{title}</span>

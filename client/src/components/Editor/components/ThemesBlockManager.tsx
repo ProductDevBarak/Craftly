@@ -2,16 +2,32 @@ import React from "react";
 
 const colorPalettes = [
   {
-    name: "Cool Harmony",
-    colors: ["#272838", "#5D536B", "#7D6B91", "#989FCE", "#347FC4"],
+    name: "Soft Glow",
+    colors: ["#F7F7F7",  "#141414", "#FFF08A", "#D9EBFE"]
   },
   {
-    name: "Forest Canopy",
-    colors: ["#CADBC0", "#C94277", "#A27E6F", "#94524A", "#2F0A28"],
+    name: "Royal Nocturne",
+    colors: ["#1E1741",  "#796BE7", "#020202", "#FFFFFF"]
   },
   {
-    name: "Golden Ember",
-    colors: ["#D7FDEC", "#A9FBD7", "#B2E4DB", "#B0C6CE", "#938BA1"],
+    name: "Electric Monochrome",
+    colors: ["#DADADA",  "#3A47EE", "#020202", "#FFFFFF"]
+  },
+  {
+    name: "Forest Essence",
+    colors: ["#D3D8C5",  "#0E2B14", "#A2C550", "#000000"]
+  },
+  {
+    name: "Blush & Latte",
+    colors: ["#F4EAE1",  "#EEA7A6", "#F5F5F5", "#59071D"]
+  },
+  {
+    name: "Urban Dusk",
+    colors: ["#1E1E1E",  "#2E2B2C", "#EAEAEA", "#E87163"]
+  },
+  {
+    name: "Harvest Grove",
+    colors: ["#C2C2C2",  "#F5F5F5", "#2B4B31", "#F5A101"]
   },
 ];
 
@@ -20,7 +36,6 @@ const cssVariableMapping = {
   "--color-b": 1,
   "--color-c": 2,
   "--color-d": 3,
-  "--color-e": 4,
   // "--primary-color": 0,
   // "--secondary-color": 1,
   // "--accent-color": 2,
@@ -70,12 +85,9 @@ const ColorBars = () => {
           console.warn(`No mapping found for CSS variable: ${prop}`);
         }
       });
-
-      // Update the rule's style
       rule.setStyle({ ...ruleStyle, ...updatedStyles });
     });
 
-    // Update root variables for consistency
     updateRootVariables(palette);
   };
 
@@ -85,7 +97,7 @@ const ColorBars = () => {
         <div key={index} className="space-y-2">
           <div className="text-left font-inter text-sm">{palette.name}</div>
           <div
-            className="relative flex cursor-pointer rounded-full overflow-hidden shadow-md h-5"
+            className="relative flex cursor-pointer rounded-full overflow-hidden shadow-md h-5 border-gray-500 border-2"
             onClick={() => handleClick(index)}
           >
             {palette.colors.map((color, colorIndex) => (

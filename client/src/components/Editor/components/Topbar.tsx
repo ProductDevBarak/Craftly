@@ -163,7 +163,7 @@ export default function Topbar({
       </div>
 
       <button
-        className="bg-white text-black px-2 pr-3 py-1 text-sm font-sm rounded mx-2 flex gap-1 items-center justify-between hover:bg-gray-200"
+        className="bg-white text-black px-2 pr-3 py-1 text-sm font-sm font-dmSans font-semibold rounded mx-2 flex gap-1 items-center justify-between hover:bg-gray-200"
         onClick={handleClick}
       >
         <svg
