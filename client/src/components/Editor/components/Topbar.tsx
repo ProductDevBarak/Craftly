@@ -75,10 +75,6 @@ export default function Topbar({
     }
   };
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
   const handleSave = async () => {
     if (!editorInstance) {
       message.error("There was an error saving the code");
