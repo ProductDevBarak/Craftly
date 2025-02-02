@@ -8,28 +8,7 @@ export default function RepromptButton({ editorInstance, setLoading }) {
   const { id } = useParams();
   const [state, setState] = useState("normal");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sendCode, setSendCode] = useState("");
   const ref = useRef(null);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // const code = await getCode(id);
-  //       // const html = code.HTML;
-  //       // const css = code.CSS;
-  //       if(!editorInstance){
-  //         console.log("No instance");
-  //       }
-  //       console.log(editorInstance.getHtml());
-  //       console.log(editorInstance.getCss());
-  //       const result = html + "\n" + css;
-  //       setSendCode(result);
-  //     } catch (error) {
-  //       console.error("Error fetching code:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [state]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -50,8 +29,7 @@ export default function RepromptButton({ editorInstance, setLoading }) {
       const html = editorInstance.getHtml();
       const css = editorInstance.getCss();
       const result = html + "\n" + css;
-      await setSendCode(result);
-      const responseChat = await updateChat(sendCode, searchTerm, id);
+      const responseChat = await updateChat(result, searchTerm, id);
       if (editorInstance) {
         editorInstance.setStyle(responseChat.CSS);
         editorInstance.setComponents(responseChat.HTML);

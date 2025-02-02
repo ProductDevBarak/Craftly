@@ -19,8 +19,8 @@ export const createChat = async (req, res) => {
     const basePrompt = `
       You are master in HTML, CSS and bootstrap. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is:
       1) Responsive,
-      2) Has good color combinations, gradients, and shadows which aligns with ${req.body.prompt} and represents calmness and mordern touch
-      3) Add few quotes and must have content for ${req.body.prompt}
+      2) Has good color combinations, gradients, and shadows which aligns with '${req.body.prompt} ' and represents calmness and mordern touch.
+      3) Add few quotes and must have content for '${req.body.prompt}'.
       4) Make the website attractive, and
       5) Add animations and transitions,
       6) Use good fonts and icons related to the website,
@@ -64,11 +64,9 @@ export const createChat = async (req, res) => {
       HTML: html,
       CSS: css,
     });
-    // console.log(code);
     const user = await User.findById(req.body.userid);
     user.prompts.push(code._id);
     await user.save();
-    // console.log(code);
     res.json(code);
   } catch (error) {
     console.error(error);
@@ -78,8 +76,9 @@ export const createChat = async (req, res) => {
 
 export const updateChat = async (req, res) => {
   const repromptBase = `I am giving you my code ${req.body.code}. Do not change it, only add ${req.body.prompt}. Keep the rest of the code intact.`;
-
+  
   try {
+    console.log(req.body.code);
     const completion = await reprompt.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -88,7 +87,7 @@ export const updateChat = async (req, res) => {
           content:
             "You are an expert in HTML and CSS. Your task is to modify an existing HTML and CSS code based on the user's prompt. Return only a JSON object in this format:\n\n" +
             "```json\n" +
-            "{ \"HTML\": \"<updated HTML>\", \"CSS\": \"<updated CSS>\" }\n" +
+            '{ "HTML": "<updated HTML>", "CSS": "<updated CSS>" }\n' +
             "```\n\n" +
             "Ensure that:\n" +
             "1. The response is **pure JSON** (no explanations, no markdown, no extra text).\n" +
@@ -101,25 +100,34 @@ export const updateChat = async (req, res) => {
         },
       ],
     });
-
     let responseContent = completion.choices[0].message.content;
     console.log("Raw API Response:", responseContent);
-    responseContent = responseContent.replace(/^```json\s*/i, "").replace(/\s*```$/, "");
+    responseContent = responseContent
+      .replace(/^```json\s*/i, "")
+      .replace(/\s*```$/, "");
     let parsedResponse;
     try {
       parsedResponse = JSON.parse(responseContent);
     } catch (jsonError) {
       console.error("JSON Parse Error:", jsonError);
-      return res.status(500).json({ error: "Invalid JSON format received from AI" });
+      return res
+        .status(500)
+        .json({ error: "Invalid JSON format received from AI" });
     }
 
     const { HTML, CSS } = parsedResponse;
 
     if (!HTML || !CSS) {
       console.error("Missing HTML or CSS in API response.");
-      return res.status(500).json({ error: "HTML or CSS is missing in AI response" });
+      return res
+        .status(500)
+        .json({ error: "HTML or CSS is missing in AI response" });
     }
-    const code = await Code.findByIdAndUpdate(req.params.id, { HTML, CSS }, { new: true });
+    const code = await Code.findByIdAndUpdate(
+      req.params.id,
+      { HTML, CSS },
+      { new: true }
+    );
     return res.json(code);
   } catch (error) {
     console.error("Error:", error);
@@ -135,6 +143,20 @@ export const getCode = async (req, res) => {
     if (!code) {
       return res.status(404).json({ error: "Code not found" });
     }
+    res.json(code);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const saveCode = async (req, res) => {
+  try {
+    console.log(req.body);
+    const code = await Code.findByIdAndUpdate(req.params.id, {
+      HTML: req.body.editorHTML,
+      CSS: req.body.editorCSS,
+    });
     res.json(code);
   } catch (error) {
     console.error(error);

@@ -33,7 +33,7 @@ function AdvanceStyleManager({ sectors }) {
             font="inter"
             border="yes"
           >
-            <div className="flex flex-wrap p-4">
+            <div className="flex flex-wrap pt-2 px-8 ">
               {sector.attributes.map((prop) => (
                 <StylePropertyField key={prop.id} prop={prop.prop} />
               ))}
