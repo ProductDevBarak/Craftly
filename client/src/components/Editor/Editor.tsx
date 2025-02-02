@@ -115,10 +115,10 @@ export default function App() {
             id: "grapesjs-custom-code",
             src: "https://unpkg.com/grapesjs-custom-code",
           },
-          {
-            id: "grapesjs-user-blocks",
-            src: "https://unpkg.com/grapesjs-user-blocks",
-          },
+          // {
+          //   id: "grapesjs-user-blocks",
+          //   src: "https://unpkg.com/grapesjs-user-blocks",
+          // },
         ]}
         onEditor={onEditor}
       >

@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   BlocksProvider,
   LayersProvider,
+  SelectorsProvider,
   StylesProvider,
 } from "@grapesjs/react";
 import { useState } from "react";
@@ -9,6 +10,7 @@ import CustomBlockManager from "./CustomBlockManager.tsx";
 import { cx } from "./common.ts";
 import CustomLayerManager from "./CustomLayerManager.tsx";
 import CustomStyleManager from "./CustomStyleManager.tsx";
+import CustomSelectorManager from "./CustomSelectorManager.tsx";
 
 const TABS = [
   {
@@ -104,9 +106,14 @@ export default function RightSidebar() {
           </BlocksProvider>
         )}
         {selectedTab === 1 && (
-          <StylesProvider>
-            {(props) => <CustomStyleManager {...props} />}
-          </StylesProvider>
+          <>
+            <SelectorsProvider>
+              {(props) => <CustomSelectorManager {...props} />}
+            </SelectorsProvider>
+            <StylesProvider>
+              {(props) => <CustomStyleManager {...props} />}
+            </StylesProvider>
+          </>
         )}
         {selectedTab === 2 && (
           <LayersProvider>
