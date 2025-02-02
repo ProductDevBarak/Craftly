@@ -75,26 +75,88 @@ export default function Topbar({
     }
   };
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
   const handleSave = async () => {
     if (!editorInstance) {
       message.error("There was an error saving the code");
       return;
     }
-    const latestHTML = editorInstance.getHtml();
-    const latestCSS = editorInstance.getCss();
+
+    const key = "saving";
+    message.loading({ content: "Saving...", key });
+
+    const html = editorInstance.getHtml();
+    const css = editorInstance.getCss();
+    const imgUrls = [...html.matchAll(/<img[^>]+src=\"([^\"]+)\"[^>]*>/g)].map(
+      (match) => match[1]
+    );
+
+    const uploadPromises = imgUrls.map(async (url) => {
+      if (url.startsWith("data:image")) {
+        const byteString = atob(url.split(",")[1]);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uint8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+          uint8Array[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([uint8Array], {
+          type: url.split(",")[0].split(":")[1].split(";")[0],
+        });
+
+        const formData = new FormData();
+        formData.append("file", blob, "image.png");
+
+        const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+        const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+
+        if (!uploadPreset || !cloudName) {
+          console.error("Cloudinary credentials are missing!");
+          return null;
+        }
+
+        formData.append("upload_preset", uploadPreset);
+
+        try {
+          const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (!res.ok) {
+            const errorData = await res.json();
+            console.error("Cloudinary error:", errorData);
+            return null;
+          }
+          const data = await res.json();
+          return { oldUrl: url, newUrl: data.secure_url };
+        } catch (error) {
+          console.error("Error uploading image to Cloudinary:", error);
+          return null;
+        }
+      }
+      return null;
+    });
+
+    const uploadedImages = (await Promise.all(uploadPromises)).filter(
+      (img): img is { oldUrl: string; newUrl: string } => img !== null
+    );
+
+    let modifiedHtml = html;
+    uploadedImages.forEach(({ oldUrl, newUrl }) => {
+      modifiedHtml = modifiedHtml.replaceAll(oldUrl, newUrl);
+    });
 
     try {
-      const response = await saveCode(id, latestHTML, latestCSS);
+      const response = await saveCode(id, modifiedHtml, css);
       if (response.status === 200) {
-        message.success("Saved successfully!");
+        message.success({ content: "Saved successfully!", key });
+      } else {
+        message.error({ content: "Failed to save!", key });
       }
     } catch (error) {
       console.error("Error saving content:", error);
-      message.error("Failed to Save!");
+      message.error({ content: "Failed to Save!", key });
     }
   };
 
@@ -231,8 +293,8 @@ export default function Topbar({
         </div>
       </div>
       <div className="ml-28">
-        <AutoDeployButton editor={editorInstance} /> 
-      </div>   
+        <AutoDeployButton editor={editorInstance} />
+      </div>
       <button
         className="bg-white text-black px-2 pr-3 py-1 text-sm font-sm font-dmSans font-semibold rounded-md mx-2 flex gap-1 items-center justify-between hover:bg-gray-200"
         onClick={handleClick}
@@ -319,8 +381,8 @@ export default function Topbar({
                   <path
                     d="M23.5 22.5769C23.5 24.1913 22.1569 25.5 20.5 25.5H11.5C9.84314 25.5 8.5 24.1913 8.5 22.5769L8.50002 12.3462M14.5 6.5H13.75L8.50002 11.6154L8.50002 12.3462M14.5 6.5H20.5C22.1569 6.5 23.5 7.80871 23.5 9.42308L23.5 12.3462M14.5 6.5V12.3462H8.50002M14.5 17.4615H22.75M22.75 17.4615L19.75 14.5385M22.75 17.4615L19.75 20.3846"
                     stroke="black"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <span>Export to Zip</span>
