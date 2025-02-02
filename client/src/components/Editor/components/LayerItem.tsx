@@ -142,7 +142,7 @@ export default function LayerItem({
             </svg>
           </div>
           <div className={cx(
-              'truncate flex-grow font-sans text-sm',
+              'truncate flex-grow font-dmSans text-sm',
               open? 'text-green-300':'text-white',
               !components.length && 'pointer-events-none ml-[-10] '
             )}

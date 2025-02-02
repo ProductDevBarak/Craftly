@@ -153,10 +153,10 @@ const Landing = () => {
       </header>
       <main className="w-full flex flex-col items-center justify-center flex-grow pt-8">
         <div className="flex flex-col text-center max-w-4xl mx-auto">
-          <h1 className="text-[46px] font-sans leading-tight font-bold">
+          <h1 className="text-[46px] font-dmSans leading-tight font-bold">
             Transform Your Ideas into Stunning Websites Instantly
           </h1>
-          <h3 className="mt-4 mb-8 text-lg font-sans font-semibold">
+          <h3 className="mt-4 mb-8 text-lg font-dmSans font-semibold">
             Get your responsive website in just 3 steps.{" "}
             <span className="text-[#f2b635]"> No coding required.</span>
           </h3>

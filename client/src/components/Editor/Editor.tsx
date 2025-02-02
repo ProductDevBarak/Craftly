@@ -153,10 +153,9 @@ export default function App() {
             editorInstance={editorInstance}
             id={id}
           />
-          <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-sans">
+          <div className="gjs-column-m flex flex-grow bg-black border-t border-white font-dmSans">
             <Canvas className="h-full gjs-custom-editor-canvas border-r" />
             <RightSidebar />
-            <AutoDeployButton editor = {editorInstance} />
             <div className="fixed bottom-4 left-4 z-10">
               {editorInstance && (
                 <RepromptButton

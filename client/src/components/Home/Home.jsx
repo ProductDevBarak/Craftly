@@ -210,10 +210,10 @@ const Home = () => {
 
       <main className="w-full flex flex-grow pt-20 pr-48">
         <div className="flex flex-col flex-grow text-center">
-          <h1 className="text-[50px] px-96 font-sans leading-tight font-bold">
+          <h1 className="text-[50px] px-96 font-dmSans leading-tight font-bold">
             Start building your dream website
           </h1>
-          <h3 className="mt-4 mb-8 text-lg font-sans font-semibold">
+          <h3 className="mt-4 mb-8 text-lg font-dmSans font-semibold">
             Describe your website in a few words, and we’ll take it from there
           </h3>
           <div className="flex justify-center items-center mt-10">
