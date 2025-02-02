@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { updateChat, getCode } from "../../../utils/code";
-import { Editor, EditorConfig } from "grapesjs";
+import { updateChat } from "../../../utils/code";
 import * as React from "react";
 
 export default function RepromptButton({ editorInstance, setLoading }) {
@@ -81,9 +80,20 @@ export default function RepromptButton({ editorInstance, setLoading }) {
             onClick={handleSubmit}
             className=" bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-              </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="white"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+              />
+            </svg>
           </button>
         </div>
       ) : (
@@ -112,7 +122,9 @@ export default function RepromptButton({ editorInstance, setLoading }) {
             </svg>
             {state === "hovered" && (
               <div className="text-black font-dmSans">
-                <h1 className="text-black font-dmSans">Fine-tune your prompt</h1>
+                <h1 className="text-black font-dmSans">
+                  Fine-tune your prompt
+                </h1>
               </div>
             )}
           </button>
