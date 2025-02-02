@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <div className="bg-gradient-to-br from-neutral-800 to-neutral-950 flex h-screen text-white">
       <div className="w-1/2 flex justify-center items-center">
-        <img src={"/images/screen.png"} className="max-w-[900px] pl-[130px]" />
+        <img src={"/images/screen.png"} className="max-w-[617px] pl-[130px] z-10" />
       </div>
       <div className="w-1/2 flex flex-col justify-center pr-10 border-l my-20 border-[#646464]">
         <div className="flex items-center mb-5">

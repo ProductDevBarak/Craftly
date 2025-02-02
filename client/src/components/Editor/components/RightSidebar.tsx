@@ -81,7 +81,7 @@ export default function RightSidebar() {
             key={tab.id}
             onClick={() => setSelectedTab(tab.id)}
             className={cx(
-              "flex items-center p-2 rounded-t-lg text-xs font-sans space-nowrap justify-center ",
+              "flex items-center p-2 rounded-t-lg text-xs font-dmSans font-bold space-nowrap justify-center ",
               selectedTab === tab.id
                 ? "border border-gray-500 border-b-transparent"
                 : "border border-transparent border-b-gray-500 bg-transparent"

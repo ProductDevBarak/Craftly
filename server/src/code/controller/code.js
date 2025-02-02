@@ -31,7 +31,6 @@ export const createChat = async (req, res) => {
           --color-b: name of color;
           --color-c: name of color;
           --color-d: name of color;
-          --color-e: name of color;
         }  
       Also, ensure the HTML code is more than 200 lines, and the CSS should be at least 400 lines. Be as creative as possible while following all the above instructions.
     `;
@@ -42,7 +41,7 @@ export const createChat = async (req, res) => {
         {
           role: "system",
           content:
-            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is 1)Responsive and good, 2) has good UI, 3) has good color combinations, gradients and shadows, 4) add quotes and sentences related to the website, 5) make the website attractive, 6) add animations and transitions, 7) use good fonts and icons related to the website, 8) incorporate microinteractions related to the website, and use :root{--color-a: #E6EFE9; --color-b: #C5F4E0; --color-c: #C2EABA; --color-d: #A7C4A0; --color-e: #8F8389; and also HTML code should be more than 100 lines and css should be atleast 200 lines .Be as creative as possible while following all the 8 instructions given.",
+            "You are master in HTML,CSS. Your task is to generate HTML and CSS separately in this format {HTML:...,CSS:....} and also while generating make sure that the website is 1)Responsive and good, 2) has good UI, 3) has good color combinations, gradients and shadows, 4) add quotes and sentences related to the website, 5) make the website attractive, 6) add animations and transitions, 7) use good fonts and icons related to the website, 8) incorporate microinteractions related to the website, and use :root{--color-a: #E6EFE9; --color-b: #C5F4E0; --color-c: #C2EABA; --color-d: #A7C4A0;and also HTML code should be more than 100 lines and css should be atleast 200 lines .Be as creative as possible while following all the 8 instructions given.",
         },
         {
           role: "user",
@@ -76,7 +75,8 @@ export const createChat = async (req, res) => {
 };
 
 export const updateChat = async (req, res) => {
-  const repromptBase = `I am giving you my code ${req.body.code} do not change it only add ${req.body.prompt} keep rest of the code intact`;
+  const repromptBase = `I am giving you my code ${req.body.code}. Do not change it, only add ${req.body.prompt}. Keep the rest of the code intact.`;
+
   try {
     const completion = await reprompt.chat.completions.create({
       model: "gpt-4o",
@@ -84,7 +84,14 @@ export const updateChat = async (req, res) => {
         {
           role: "system",
           content:
-            "You are master in HTML, CSS. Your task is to generate HTML and CSS. You will be given HTML, CSS as an object and a prompt in which the user will ask to make changes to the given code. Return the HTML and CSS separately in this format {HTML: ..., CSS: ...} and also while generating make sure that the website is responsive. Always include body tag in html and most importantly keep rest of the code intact",
+            "You are an expert in HTML and CSS. Your task is to modify an existing HTML and CSS code based on the user's prompt. Return only a JSON object in this format:\n\n" +
+            "```json\n" +
+            '{ "HTML": "<updated HTML>", "CSS": "<updated CSS>" }\n' +
+            "```\n\n" +
+            "Ensure that:\n" +
+            "1. The response is **pure JSON** (no explanations, no markdown, no extra text).\n" +
+            "2. The updated code remains **fully responsive**.\n" +
+            "3. The structure of the code remains intact.",
         },
         {
           role: "user",
@@ -92,28 +99,41 @@ export const updateChat = async (req, res) => {
         },
       ],
     });
-    const responseContent = completion.choices[0].message.content;
-    console.log(responseContent);
-    const htmlMatch = responseContent.match(/<body>([\s\S]*?)<\/body>/i);
-    console.log(htmlMatch);
-    var cssMatch = responseContent.match(/"CSS":\s*"((?:[^"\\]|\\.)*)"/i);
-    if (cssMatch === null) {
-      cssMatch = responseContent.match(/"\w+":\s*"((?:[^"\\]|\\.)*)"/i);
+
+    let responseContent = completion.choices[0].message.content;
+    console.log("Raw API Response:", responseContent);
+    responseContent = responseContent
+      .replace(/^```json\s*/i, "")
+      .replace(/\s*```$/, "");
+    let parsedResponse;
+    try {
+      parsedResponse = JSON.parse(responseContent);
+    } catch (jsonError) {
+      console.error("JSON Parse Error:", jsonError);
+      return res
+        .status(500)
+        .json({ error: "Invalid JSON format received from AI" });
     }
-    const html = htmlMatch
-      ? htmlMatch[1].replace(/\\n/g, "\n").replace(/\\"/g, '"')
-      : null;
-    const css = cssMatch
-      ? cssMatch[1].replace(/\\n/g, "\n").replace(/\\"/g, '"')
-      : null;
-    const code = await Code.findByIdAndUpdate(req.params.id, {
-      HTML: html,
-      CSS: css,
-    });
-    res.json(code);
+
+    const { HTML, CSS } = parsedResponse;
+
+    if (!HTML || !CSS) {
+      console.error("Missing HTML or CSS in API response.");
+      return res
+        .status(500)
+        .json({ error: "HTML or CSS is missing in AI response" });
+    }
+    const code = await Code.findByIdAndUpdate(
+      req.params.id,
+      { HTML, CSS },
+      { new: true }
+    );
+    return res.json(code);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error:", error);
+    if (!res.headersSent) {
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 };
 

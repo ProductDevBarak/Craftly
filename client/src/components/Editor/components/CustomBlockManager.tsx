@@ -15,7 +15,7 @@ export default function CustomBlockManager({
   dragStop,
 }: CustomBlockManagerProps) {
   const [isMoreVisible, setIsMoreVisible] = useState(false);
-  const [isThemesVisible, setIsThemesVisible] = useState(false);
+  const [isThemesVisible, setIsThemesVisible] = useState(true);
   const [isMadeVisible, setIsMadeVisible] = useState(false);
 
   const toggleMore = () => {
@@ -36,7 +36,7 @@ export default function CustomBlockManager({
         className="flex items-center justify-between pt-3 px-4 cursor-pointer mb-4"
         onClick={toggleThemes}
       >
-        <h1 className="text-lg font-sans text-[300]">Themes</h1>
+        <h1 className="text-[15px] font-dmSans font-semibold">Themes</h1>
         <button className="py-1 text-white rounded">
           <svg
             className={`transform transition-transform duration-300 ${
