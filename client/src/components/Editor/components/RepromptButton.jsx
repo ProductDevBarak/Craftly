@@ -4,27 +4,12 @@ import { updateChat, getCode } from "../../../utils/code";
 import { Editor, EditorConfig } from "grapesjs";
 import * as React from "react";
 
-export default function RepromptButton({ editor, setLoading }) {
+export default function RepromptButton({ editorInstance, setLoading }) {
   const { id } = useParams();
   const [state, setState] = useState("normal");
   const [searchTerm, setSearchTerm] = useState("");
   const [sendCode, setSendCode] = useState("");
   const ref = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const code = await getCode(id);
-        const html = code.HTML;
-        const css = code.CSS;
-        const result = html + "\n" + css;
-        setSendCode(result);
-      } catch (error) {
-        console.error("Error fetching code:", error);
-      }
-    };
-    fetchData();
-  }, [id]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -42,10 +27,14 @@ export default function RepromptButton({ editor, setLoading }) {
     e.preventDefault();
     try {
       setLoading(true);
+      const html = editorInstance.getHtml();
+      const css = editorInstance.getCss();
+      const result = html + "\n" + css;
+      await setSendCode(result);
       const responseChat = await updateChat(sendCode, searchTerm, id);
-      if (editor) {
-        editor.setStyle(responseChat.CSS);
-        editor.setComponents(responseChat.HTML);
+      if (editorInstance) {
+        editorInstance.setStyle(responseChat.CSS);
+        editorInstance.setComponents(responseChat.HTML);
       } else {
         console.error("Editor not found");
       }
@@ -94,9 +83,20 @@ export default function RepromptButton({ editor, setLoading }) {
             onClick={handleSubmit}
             className=" bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-              </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="white"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+              />
+            </svg>
           </button>
         </div>
       ) : (
@@ -125,7 +125,9 @@ export default function RepromptButton({ editor, setLoading }) {
             </svg>
             {state === "hovered" && (
               <div className="text-black font-dmSans">
-                <h1 className="text-black font-dmSans">Fine-tune your prompt</h1>
+                <h1 className="text-black font-dmSans">
+                  Fine-tune your prompt
+                </h1>
               </div>
             )}
           </button>
