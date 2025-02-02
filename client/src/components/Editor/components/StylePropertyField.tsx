@@ -150,8 +150,6 @@ export default function StylePropertyField({
     case "slider":
       {
         const sliderProp = prop as PropertySlider;
-        // console.log(value);
-        // console.log(sliderProp);
         inputToRender = (
           <Slider
             value={value}
