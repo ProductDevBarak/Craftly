@@ -42,7 +42,7 @@ const CustomAccordion = ({
       <path
         d="M7 20.5L16 11.5L25 20.5"
         stroke={isOpen ? "#70ce4a" : "white"}
-        stroke-opacity={isOpen ? "1" : "0.56"}
+        strokeOpacity={isOpen ? "1" : "0.56"}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
