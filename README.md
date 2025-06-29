@@ -205,6 +205,7 @@ The client and server cannot be run at the same time on a same machine. Kindly u
 
 - **Multi-User Collaboration**:
   Allow real-time collaboration with synchronized updates and role-based access for improved teamwork.
+  
 
 - **Branding Alignment**:
   Introduce tools to help users easily align their websites with brand identity, including logos, colors, and fonts.
