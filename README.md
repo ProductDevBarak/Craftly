@@ -14,7 +14,7 @@ This text-to-website generator was developed by students of Barak Hostel, IIT Gu
 1. **AI-Driven Template Refinement**:
 
 - The platform uses OpenAI’s technology to process user input and generate customized webpage templates based on specific needs.
-- The AI ensures that templates are relevant and result in high-quality, personalized designs for various applications.
+- The AI ensures that the templates are relevant and result in high-quality, personalized designs for various applications.
 
 2. **Responsive Design**:
 
