@@ -1,6 +1,7 @@
 import Editor from "@grapesjs/react";
 import axios from "axios";
 const backendURL = process.env.REACT_APP_BACKEND_URL;
+axios.defaults.withCredentials = true; // send auth cookie with every request
 
 export const createChat = async (prompt, userid, navigate) => {
   try {

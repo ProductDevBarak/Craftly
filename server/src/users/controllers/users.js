@@ -1,6 +1,7 @@
 import User from "../models/users.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import Code from "../../code/models/code.js";
 
 export const Login = async (req, res) => {
   try {
@@ -18,10 +19,15 @@ export const Login = async (req, res) => {
     }
 
     user = user.toObject({ getters: true });
-    const token = jwt.sign(user, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.cookie("access_token", token, {
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.status(200).json({
       success: true,
@@ -71,8 +77,10 @@ export const getUser = async (req, res) => {
 export const deleteCode = async (req, res) => {
   try {
     const { id } = req.body;
-    const { userid } = req.params;
-    const user = await User.findById(userid);
+    if (req.params.userid !== req.userId) {
+      return res.status(403).json({ success: false, message: "Not allowed." });
+    }
+    const user = await User.findById(req.userId);
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -80,10 +88,14 @@ export const deleteCode = async (req, res) => {
       });
     }
     const objectIdToDelete = new mongoose.Types.ObjectId(id);
+    if (!user.prompts.some((p) => p.equals(objectIdToDelete))) {
+      return res.status(403).json({ success: false, message: "Not allowed." });
+    }
     user.prompts = user.prompts.filter(
       (prompt) => !prompt._id.equals(objectIdToDelete)
     );
     await user.save();
+    await Code.findByIdAndDelete(objectIdToDelete);
     res.status(200).json({
       success: true,
       message: "Code deleted successfully.",

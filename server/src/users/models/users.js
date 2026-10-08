@@ -10,8 +10,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  number: {
-    type: Number,
+  phoneNumber: {
+    type: String,
+  },
+  avatar: {
+    type: String,
   },
   prompts: [
     {
@@ -19,14 +22,7 @@ const userSchema = new mongoose.Schema({
       ref: "Code",
     },
   ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+},
+{ timestamps: true });
 
 export default mongoose.model("Users", userSchema);

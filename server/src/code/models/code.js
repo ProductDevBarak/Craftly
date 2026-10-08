@@ -10,14 +10,7 @@ const codeSchema = new mongoose.Schema({
   CSS: {
     type: String,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+},
+{ timestamps: true });
 
 export default mongoose.model("Code", codeSchema);

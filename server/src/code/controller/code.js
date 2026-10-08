@@ -4,6 +4,12 @@ import Code from "../models/code.js";
 import User from "../../users/models/users.js";
 dotenv.config();
 
+// True if the logged-in user owns this code document
+const userOwnsCode = async (userId, codeId) => {
+  const user = await User.findById(userId);
+  return !!user && user.prompts.some((p) => p.equals(codeId));
+};
+
 const openai = new OpenAI({
   organization: process.env.ORG,
   apiKey: process.env.OPENAI_API_KEY,
@@ -65,9 +71,7 @@ export const createChat = async (req, res) => {
       HTML: html,
       CSS: css,
     });
-    const user = await User.findById(req.body.userid);
-    user.prompts.push(code._id);
-    await user.save();
+    await User.findByIdAndUpdate(req.userId, { $push: { prompts: code._id } });
     res.json(code);
   } catch (error) {
     console.error(error);
@@ -79,6 +83,9 @@ export const updateChat = async (req, res) => {
   const repromptBase = `I am giving you my code ${req.body.code}. Do not change it, only add ${req.body.prompt}. Keep the rest of the code intact.`;
 
   try {
+    if (!(await userOwnsCode(req.userId, req.params.id))) {
+      return res.status(403).json({ error: "Not allowed to edit this code" });
+    }
     const completion = await reprompt.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -138,6 +145,9 @@ export const updateChat = async (req, res) => {
 
 export const getCode = async (req, res) => {
   try {
+    if (!(await userOwnsCode(req.userId, req.params.id))) {
+      return res.status(403).json({ error: "Not allowed to view this code" });
+    }
     const code = await Code.findById(req.params.id);
     if (!code) {
       return res.status(404).json({ error: "Code not found" });
@@ -151,10 +161,14 @@ export const getCode = async (req, res) => {
 
 export const saveCode = async (req, res) => {
   try {
-    const code = await Code.findByIdAndUpdate(req.params.id, {
-      HTML: req.body.editorHTML,
-      CSS: req.body.editorCSS,
-    });
+    if (!(await userOwnsCode(req.userId, req.params.id))) {
+      return res.status(403).json({ error: "Not allowed to save this code" });
+    }
+    const code = await Code.findByIdAndUpdate(
+      req.params.id,
+      { HTML: req.body.editorHTML, CSS: req.body.editorCSS },
+      { new: true }
+    );
     res.json(code);
   } catch (error) {
     console.error(error);

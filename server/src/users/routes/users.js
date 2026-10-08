@@ -1,11 +1,12 @@
 import express from "express";
 import { Login, deleteCode, getUser } from "../controllers/users.js";
+import { requireAuth } from "../../middleware/auth.js";
 
 const AuthRoute = express.Router();
 
 //Routes
 AuthRoute.post("/login", Login);
 AuthRoute.get("/get-user", getUser);
-AuthRoute.post("/delete/:userid", deleteCode);
+AuthRoute.post("/delete/:userid", requireAuth, deleteCode);
 
 export default AuthRoute;
